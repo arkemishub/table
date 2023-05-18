@@ -25,6 +25,7 @@ type ITableProps = {
   columns: Omit<Column, "availableFilterOperators">[];
   data: Record<string, unknown>[];
   actions?: ActionsConfig;
+  noResult?: ReactNode;
 } & Partial<IPaginationData> &
   Partial<ISortData>;
 

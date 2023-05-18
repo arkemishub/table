@@ -275,3 +275,27 @@ export const WithActions = (args: Partial<ITableProps>) => {
     />
   );
 };
+
+export const NoResult = (args: Partial<ITableProps>) => {
+  return (
+    <Table
+      data={[]}
+      columns={mockColumns}
+      actions={{
+        label: "Actions",
+        actions: [
+          {
+            content: "Action 1",
+            onClick: () => alert("Action 1"),
+          },
+          {
+            content: () => "Action 2",
+            onClick: () => alert("Action 2"),
+          },
+        ],
+      }}
+      noResult="No result"
+      {...args}
+    />
+  );
+};
