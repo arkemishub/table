@@ -1,3 +1,10 @@
+## [0.6.1](https://github.com/arkemishub/table/compare/v0.6.0...v0.6.1) (2023-05-19)
+
+
+### Bug Fixes
+
+* add totalCount to show the number of rows ([#2](https://github.com/arkemishub/table/issues/2)) ([94a8d0b](https://github.com/arkemishub/table/commit/94a8d0b70b49737215f8bc96623a0e2150e99491))
+
 # [0.6.0](https://github.com/arkemishub/table/compare/v0.5.1...v0.6.0) (2023-05-19)
 
 
