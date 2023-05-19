@@ -35,7 +35,7 @@ function Table({
   sort,
   setSort,
   sortType,
-  noResult,
+  noResult = "No Result",
 }: ITableProps) {
   const { components } = useTableConfig();
 
@@ -55,8 +55,8 @@ function Table({
   );
 
   const noResultColspan = actions
-    ? actions.actions.length + columns.length - 1
-    : columns.length - 1;
+    ? actions.actions.length + columns.length
+    : columns.length;
 
   return (
     <>
