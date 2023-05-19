@@ -121,6 +121,7 @@ function useTable<
       pages,
       currentPage,
       paginationType: pagination.type,
+      totalCount: pagination?.totalCount ?? 0,
     };
   }
 

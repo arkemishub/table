@@ -47,6 +47,7 @@ interface IPaginationData {
   pages: number[];
   currentPage: number;
   paginationType?: "custom";
+  totalCount?: number;
 }
 
 type IColumnsData = {
