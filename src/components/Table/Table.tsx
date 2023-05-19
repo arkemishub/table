@@ -35,6 +35,7 @@ function Table({
   sort,
   setSort,
   sortType,
+  noResult = "No Result",
 }: ITableProps) {
   const { components } = useTableConfig();
 
@@ -52,6 +53,10 @@ function Table({
     },
     [components]
   );
+
+  const noResultColspan = actions
+    ? actions.actions.length + columns.length
+    : columns.length;
 
   return (
     <>
@@ -76,45 +81,59 @@ function Table({
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => (
-            <tr key={index}>
-              {actions && actions.position !== "end" && (
-                <td
-                  className={`${actions?.className ?? ""} arke__table__actions`}
-                  style={actions?.style}
-                >
-                  {actions.actions.map((action, index) => (
-                    <TableAction
-                      key={index}
-                      content={action.content}
-                      data={row}
-                      onClick={action.onClick}
-                    />
+          {data?.length > 0
+            ? data.map((row, index) => (
+                <tr key={index}>
+                  {actions && actions.position !== "end" && (
+                    <td
+                      className={`${
+                        actions?.className ?? ""
+                      } arke__table__actions`}
+                      style={actions?.style}
+                    >
+                      {actions.actions.map((action, index) => (
+                        <TableAction
+                          key={index}
+                          content={action.content}
+                          data={row}
+                          onClick={action.onClick}
+                        />
+                      ))}
+                    </td>
+                  )}
+                  {columns.map((col) => (
+                    <td
+                      key={col.id}
+                      className={col?.className}
+                      style={col?.style}
+                    >
+                      {renderData(col, row)}
+                    </td>
                   ))}
-                </td>
+                  {actions && actions.position === "end" && (
+                    <td
+                      className={`${
+                        actions?.className ?? ""
+                      } arke__table__actions`}
+                      style={actions?.style}
+                    >
+                      {actions.actions.map((action, index) => (
+                        <TableAction
+                          key={index}
+                          content={action.content}
+                          data={row}
+                          onClick={action.onClick}
+                        />
+                      ))}
+                    </td>
+                  )}
+                </tr>
+              ))
+            : noResult && (
+                <tr className="arke__table__noresult">
+                  <td colSpan={noResultColspan}>{noResult}</td>
+                </tr>
               )}
-              {columns.map((col) => (
-                <td key={col.id} className={col?.className} style={col?.style}>
-                  {renderData(col, row)}
-                </td>
-              ))}
-              {actions && actions.position === "end" && (
-                <td
-                  className={`${actions?.className ?? ""} arke__table__actions`}
-                  style={actions?.style}
-                >
-                  {actions.actions.map((action, index) => (
-                    <TableAction
-                      key={index}
-                      content={action.content}
-                      data={row}
-                      onClick={action.onClick}
-                    />
-                  ))}
-                </td>
-              )}
-            </tr>
-          ))}
         </tbody>
       </table>
       {pages &&
