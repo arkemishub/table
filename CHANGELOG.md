@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/arkemishub/table/compare/v0.5.1...v0.6.0) (2023-05-19)
+
+
+### Features
+
+* add no result row ([#1](https://github.com/arkemishub/table/issues/1)) ([5b4ffc5](https://github.com/arkemishub/table/commit/5b4ffc5dd6134a73cdfe39feee57cfe1a3474a66))
+
 ## [0.5.1](https://github.com/arkemishub/table/compare/v0.5.0...v0.5.1) (2023-03-24)
 
 
