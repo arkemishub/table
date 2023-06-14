@@ -53,6 +53,7 @@ interface IPaginationData {
 type IColumnsData = {
   allColumns: AllColumns;
   toggleHideAll: () => void;
+  toggleHide: (columns: Column[]) => void;
   columns: Array<Omit<Column, "availableFilterOperators">>;
   resetAllFilters: () => void;
   setFilters: (filters: Filter[]) => void;
@@ -90,6 +91,7 @@ type UseTableAction =
       payload: number;
     }
   | { type: "toggleVisibleItem"; payload: string }
+  | { type: "toggleMultipleVisibleItems"; payload: Column[] }
   | { type: "toggleAllVisibleItems"; payload: Column[] }
   | { type: "refresh"; payload: Partial<TableState> }
   | { type: "setFilters"; payload: Filter[] }

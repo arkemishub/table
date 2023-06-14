@@ -16,7 +16,7 @@
 
 import { useReducer, useState } from "react";
 import usePagination from "../usePagination";
-import type { Filter, Sort } from "../../types";
+import type { Column, Filter, Sort } from "../../types";
 import type {
   IPaginationConfig,
   IUseTableConfig,
@@ -40,6 +40,11 @@ function tableReducer(state: TableState, action: UseTableAction) {
         visibleColumns: state.visibleColumns.includes(payload)
           ? state.visibleColumns.filter((c) => c !== payload)
           : [...state.visibleColumns, payload],
+      };
+    case "toggleMultipleVisibleItems":
+      return {
+        ...state,
+        visibleColumns: payload.filter((c) => !c.hidden).map((c) => c.id),
       };
     case "toggleAllVisibleItems":
       return {
@@ -137,6 +142,8 @@ function useTable<
         availableFilterOperators:
           c?.availableFilterOperators ?? (c?.type && availableFilters[c.type]),
       })),
+      toggleHide: (columns: Column[]) =>
+        dispatch({ type: "toggleMultipleVisibleItems", payload: columns }),
       toggleHideAll: () =>
         dispatch({ type: "toggleAllVisibleItems", payload: columns }),
       columns: columns

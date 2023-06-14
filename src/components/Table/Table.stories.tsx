@@ -20,7 +20,7 @@ import { ITableProps } from "./Table.types";
 import mockData from "../../__mocks__/mockData";
 import { useTable } from "../../hooks";
 import mockColumns from "../../__mocks__/mockColumns";
-import { SortType } from "../../types";
+import { Column, SortType } from "../../types";
 
 export default {
   title: "Table",
@@ -193,6 +193,44 @@ export const WithColumnHiding = (args: Partial<ITableProps>) => {
             <label htmlFor={id}>{label}</label>
           </div>
         ))}
+      </div>
+      <Table {...tableProps} data={data} {...args} />
+    </>
+  );
+};
+
+export const WithMultipleColumnHiding = (args: Partial<ITableProps>) => {
+  const data = mockData;
+
+  const { tableProps, allColumns, toggleHide } = useTable({
+    columns: mockColumns,
+  });
+  const [tempColumns, setTempColumns] = useState<Column[]>(allColumns);
+
+  const handleChange = (column: Column) => {
+    setTempColumns((prevState) =>
+      prevState.map((c) =>
+        c.id === column.id ? { ...c, hidden: !c.hidden } : c
+      )
+    );
+  };
+
+  return (
+    <>
+      <div>
+        {allColumns.map((col) => (
+          <div key={col.id}>
+            <input
+              checked={!tempColumns.find((c) => c.id === col.id)?.hidden}
+              onClick={() => handleChange(col)}
+              type="checkbox"
+              id={col.id}
+            />
+            <label htmlFor={col.id}>{col.label}</label>
+          </div>
+        ))}
+        <button onClick={() => setTempColumns([])}>Reset</button>
+        <button onClick={() => toggleHide(tempColumns)}>Confirm</button>
       </div>
       <Table {...tableProps} data={data} {...args} />
     </>
