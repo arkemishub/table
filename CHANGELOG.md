@@ -1,3 +1,10 @@
+## [0.6.3](https://github.com/arkemishub/table/compare/v0.6.2...v0.6.3) (2023-06-14)
+
+
+### Bug Fixes
+
+* expose toggleHide method from useTable ([#5](https://github.com/arkemishub/table/issues/5)) ([6920b23](https://github.com/arkemishub/table/commit/6920b23af21830442f26ab5d5c609ee2d40873bd))
+
 ## [0.6.2](https://github.com/arkemishub/table/compare/v0.6.1...v0.6.2) (2023-06-14)
 
 
