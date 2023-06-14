@@ -82,7 +82,7 @@ function useTable<
     useReducer(tableReducer, {
       currentPage: pagination?.initialPage || 0,
       pageSize: pagination?.pageSize || 10,
-      visibleColumns: columns?.map((c) => c.id) ?? [],
+      visibleColumns: columns?.filter((c) => !c.hidden).map((c) => c.id) ?? [],
       filters: [],
       sort: sorting?.default ?? [],
     });
@@ -133,7 +133,7 @@ function useTable<
         ...c,
         toggleHide: () =>
           dispatch({ type: "toggleVisibleItem", payload: c.id }),
-        isHidden: !visibleColumns.includes(c.id),
+        hidden: !visibleColumns.includes(c.id),
         availableFilterOperators:
           c?.availableFilterOperators ?? (c?.type && availableFilters[c.type]),
       })),

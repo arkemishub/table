@@ -19,7 +19,7 @@ import { Column, Filter, Sort } from "../../types";
 type AllColumns = Array<
   Column & {
     toggleHide: () => void;
-    isHidden: boolean;
+    hidden: boolean;
   }
 >;
 
