@@ -176,16 +176,16 @@ export const WithColumnHiding = (args: Partial<ITableProps>) => {
     <>
       <div>
         <input
-          checked={allColumns.every((c) => !c.isHidden)}
+          checked={allColumns.every((c) => !c.hidden)}
           onClick={toggleHideAll}
           type="checkbox"
           id="all"
         />
         <label htmlFor="all">All</label>
-        {allColumns.map(({ id, label, toggleHide, isHidden }) => (
+        {allColumns.map(({ id, label, toggleHide, hidden }) => (
           <div key={id}>
             <input
-              checked={!isHidden}
+              checked={!hidden}
               onClick={toggleHide}
               type="checkbox"
               id={id}

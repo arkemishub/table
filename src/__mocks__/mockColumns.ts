@@ -26,7 +26,7 @@ const mockColumns = [
     render: (data: Record<string, unknown>) => `Mr. ${data.last_name}`,
   },
   { label: "Email", id: "email" },
-  { label: "Gender", id: "gender" },
+  { label: "Gender", id: "gender", hidden: true },
   { label: "IP Address", id: "ip_address", sortable: false },
 ];
 

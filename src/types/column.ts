@@ -36,4 +36,5 @@ export type Column = {
   type?: ColumnType;
   availableFilterOperators?: Array<FilterOperator>;
   sortable?: boolean;
+  hidden?: boolean;
 };
