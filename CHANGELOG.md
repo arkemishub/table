@@ -1,3 +1,10 @@
+## [0.6.2](https://github.com/arkemishub/table/compare/v0.6.1...v0.6.2) (2023-06-14)
+
+
+### Bug Fixes
+
+* adjust column hiding ([#4](https://github.com/arkemishub/table/issues/4)) ([0bc7655](https://github.com/arkemishub/table/commit/0bc76558db799447a64ef9567dfc50bc3b6c512c))
+
 ## [0.6.1](https://github.com/arkemishub/table/compare/v0.6.0...v0.6.1) (2023-05-19)
 
 
