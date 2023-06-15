@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/arkemishub/table/compare/v0.6.3...v0.7.0) (2023-06-15)
+
+
+### Features
+
+* add renderHeader function to columns ([#6](https://github.com/arkemishub/table/issues/6)) ([1b142c3](https://github.com/arkemishub/table/commit/1b142c343a332d3d3d21ee7fee1f711d5c7e6379))
+
 ## [0.6.3](https://github.com/arkemishub/table/compare/v0.6.2...v0.6.3) (2023-06-14)
 
 
