@@ -51,6 +51,7 @@ function TableHeadCell({
   sortable,
   setSort,
   sortType,
+  renderHeader,
 }: Column & Partial<ISortData>) {
   const isSortingEnabled = sortable && sortType !== "custom";
 
@@ -91,8 +92,7 @@ function TableHeadCell({
       }}
       onClick={handleChangeSort}
     >
-      {label}
-
+      {renderHeader ? renderHeader() : label}
       {columnSort && <Icon type={columnSort.type} />}
     </th>
   );

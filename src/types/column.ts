@@ -30,6 +30,7 @@ export enum ColumnType {
 export type Column = {
   id: string;
   label: string;
+  renderHeader?: () => string | number | ReactNode;
   render?: (data: Record<string, unknown>) => string | number | ReactNode;
   className?: string;
   style?: CSSProperties;

@@ -75,6 +75,7 @@ function Table({
                 className={col.className}
                 style={col.style}
                 sortType={sortType}
+                renderHeader={col.renderHeader}
               />
             ))}
             {actions && actions?.position === "end" && <th>{actions.label}</th>}
