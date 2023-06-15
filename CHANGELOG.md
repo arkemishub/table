@@ -1,3 +1,10 @@
+## [0.7.1](https://github.com/arkemishub/table/compare/v0.7.0...v0.7.1) (2023-06-15)
+
+
+### Bug Fixes
+
+* adjust visibile columns when config is reloaded ([#7](https://github.com/arkemishub/table/issues/7)) ([e896e06](https://github.com/arkemishub/table/commit/e896e069a7a97ee04ab0d1255380b4403ba2752e))
+
 # [0.7.0](https://github.com/arkemishub/table/compare/v0.6.3...v0.7.0) (2023-06-15)
 
 
