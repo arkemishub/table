@@ -99,7 +99,8 @@ function useTable<
       payload: {
         pageSize: config?.pagination?.pageSize ?? 10,
         currentPage: config?.pagination?.initialPage ?? 0,
-        visibleColumns: config?.columns?.map((c) => c.id) ?? [],
+        visibleColumns:
+          config?.columns?.filter((c) => !c.hidden).map((c) => c.id) ?? [],
         sort: [],
       },
     });
