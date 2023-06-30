@@ -26,6 +26,7 @@ type ITableProps = {
   data: Record<string, unknown>[];
   actions?: ActionsConfig;
   noResult?: ReactNode;
+  renderHeader?: (column: Column) => ReactNode;
 } & Partial<IPaginationData> &
   Partial<ISortData>;
 

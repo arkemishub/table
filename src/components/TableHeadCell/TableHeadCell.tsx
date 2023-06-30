@@ -92,7 +92,7 @@ function TableHeadCell({
       }}
       onClick={handleChangeSort}
     >
-      {renderHeader ? renderHeader() : label}
+      {renderHeader?.() ?? label}
       {columnSort && <Icon type={columnSort.type} />}
     </th>
   );
