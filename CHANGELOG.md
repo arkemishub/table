@@ -1,3 +1,10 @@
+## [0.7.2](https://github.com/arkemishub/table/compare/v0.7.1...v0.7.2) (2023-06-30)
+
+
+### Bug Fixes
+
+* renderHeader can now be defined as Table prop ([#9](https://github.com/arkemishub/table/issues/9)) ([004c0ee](https://github.com/arkemishub/table/commit/004c0ee14ecd202970f520488259f4cdf6841a3a))
+
 ## [0.7.1](https://github.com/arkemishub/table/compare/v0.7.0...v0.7.1) (2023-06-15)
 
 
