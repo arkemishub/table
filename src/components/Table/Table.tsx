@@ -36,6 +36,7 @@ function Table({
   setSort,
   sortType,
   noResult = "No Result",
+  renderHeader,
 }: ITableProps) {
   const { components } = useTableConfig();
 
@@ -75,7 +76,9 @@ function Table({
                 className={col.className}
                 style={col.style}
                 sortType={sortType}
-                renderHeader={col.renderHeader}
+                renderHeader={() =>
+                  col?.renderHeader?.() ?? renderHeader?.(col)
+                }
               />
             ))}
             {actions && actions?.position === "end" && <th>{actions.label}</th>}

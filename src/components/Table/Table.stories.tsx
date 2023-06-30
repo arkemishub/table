@@ -50,6 +50,32 @@ export const WithPagination = (args: Partial<ITableProps>) => {
   return <Table {...tableProps} data={pagedData} {...args} />;
 };
 
+export const WithCustomHeader = (args: Partial<ITableProps>) => {
+  const data = mockData;
+  const pageSize = 10;
+
+  const { tableProps, currentPage } = useTable({
+    pagination: {
+      totalCount: 100,
+    },
+    columns: mockColumns,
+  });
+
+  const pagedData = data.slice(
+    currentPage * pageSize,
+    (currentPage + 1) * pageSize
+  );
+
+  return (
+    <Table
+      {...tableProps}
+      renderHeader={(column) => column.id}
+      data={pagedData}
+      {...args}
+    />
+  );
+};
+
 export const WithLoadingConfiguration = (args: Partial<ITableProps>) => {
   const [hasLoaded, setHasLoaded] = useState(false);
   const { tableProps, currentPage } = useTable(
