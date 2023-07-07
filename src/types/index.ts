@@ -15,5 +15,7 @@
  */
 
 export * from "./column";
+export * from "./components";
+export * from "./expandible";
 export * from "./filters";
 export * from "./sort";

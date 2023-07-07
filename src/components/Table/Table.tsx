@@ -16,7 +16,7 @@
 
 import { Action, ITableProps } from "./Table.types";
 import { Pagination } from "../Pagination";
-import { ReactNode, useCallback, useMemo, useState } from "react";
+import { Fragment, ReactNode, useCallback } from "react";
 import pagination from "../Pagination/Pagination";
 import { useTableConfig } from "../TableConfigProvider/TableConfigProvider";
 import { Column } from "../../types";
@@ -37,13 +37,19 @@ function Table({
   sortType,
   noResult = "No Result",
   renderHeader,
+  expandedRows,
+  onExpandRow,
+  ...props
 }: ITableProps) {
-  const { components } = useTableConfig();
+  const config = useTableConfig();
+  const components = props.components ?? config.components;
 
   const renderData = useCallback(
-    (column: Column, row: Record<string, unknown>) => {
+    (column: Column, row: Record<string, unknown>, index: number) => {
       if (column.render) {
-        return column.render(row);
+        return column.render(row, {
+          handleExpandRow: () => onExpandRow?.(index),
+        });
       }
 
       if (column.type && components[column.type]) {
@@ -52,7 +58,20 @@ function Table({
 
       return row?.[column.id] as ReactNode;
     },
-    [components]
+    [components, onExpandRow]
+  );
+
+  const renderExpanded = useCallback(
+    (row: Record<string, unknown>, index: number) => {
+      if (!expandedRows?.[index] || !components.ExpandedRow) return null;
+
+      return (
+        <tr>
+          <td colSpan={columns.length}>{components.ExpandedRow(row)}</td>
+        </tr>
+      );
+    },
+    [expandedRows]
   );
 
   const noResultColspan = actions
@@ -87,51 +106,55 @@ function Table({
         <tbody>
           {data?.length > 0
             ? data.map((row, index) => (
-                <tr key={index}>
-                  {actions && actions.position !== "end" && (
-                    <td
-                      className={`${
-                        actions?.className ?? ""
-                      } arke__table__actions`}
-                      style={actions?.style}
-                    >
-                      {actions.actions.map((action, index) => (
-                        <TableAction
-                          key={index}
-                          content={action.content}
-                          data={row}
-                          onClick={action.onClick}
-                        />
-                      ))}
-                    </td>
-                  )}
-                  {columns.map((col) => (
-                    <td
-                      key={col.id}
-                      className={col?.className}
-                      style={col?.style}
-                    >
-                      {renderData(col, row)}
-                    </td>
-                  ))}
-                  {actions && actions.position === "end" && (
-                    <td
-                      className={`${
-                        actions?.className ?? ""
-                      } arke__table__actions`}
-                      style={actions?.style}
-                    >
-                      {actions.actions.map((action, index) => (
-                        <TableAction
-                          key={index}
-                          content={action.content}
-                          data={row}
-                          onClick={action.onClick}
-                        />
-                      ))}
-                    </td>
-                  )}
-                </tr>
+                <Fragment key={index}>
+                  <tr>
+                    {actions && actions.position !== "end" && (
+                      <td
+                        className={`${
+                          actions?.className ?? ""
+                        } arke__table__actions`}
+                        style={actions?.style}
+                      >
+                        {actions.actions.map((action, index) => (
+                          <TableAction
+                            key={index}
+                            content={action.content}
+                            data={row}
+                            onClick={action.onClick}
+                          />
+                        ))}
+                      </td>
+                    )}
+                    {columns.map((col) => (
+                      <td
+                        key={col.id}
+                        className={col?.className}
+                        style={col?.style}
+                      >
+                        {renderData(col, row, index)}
+                      </td>
+                    ))}
+                    {actions && actions.position === "end" && (
+                      <td
+                        className={`${
+                          actions?.className ?? ""
+                        } arke__table__actions`}
+                        style={actions?.style}
+                      >
+                        {actions.actions.map((action, index) => (
+                          <TableAction
+                            key={index}
+                            content={action.content}
+                            data={row}
+                            onClick={action.onClick}
+                          />
+                        ))}
+                      </td>
+                    )}
+                  </tr>
+
+                  {renderExpanded(row, index)}
+                </Fragment>
               ))
             : noResult && (
                 <tr className="arke__table__noresult">

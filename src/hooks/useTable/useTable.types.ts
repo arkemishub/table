@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Column, Filter, Sort } from "../../types";
+import { Column, ExpandileState, Filter, Sort } from "../../types";
 
 type AllColumns = Array<
   Column & {
@@ -73,8 +73,16 @@ type IUseTableResult<Pagination, Sort> = (Pagination extends undefined
   (Sort extends undefined ? undefined : ISortData) &
   IColumnsData;
 
+type IUseTableForwardedProps<Pagination, Sort> = IUseTableResult<
+  Pagination,
+  Sort
+> & {
+  expandedRows?: ExpandileState;
+  onExpandRow?: (index: number) => void;
+};
+
 type IUseTableData<Pagination, Sort> = {
-  tableProps: IUseTableResult<Pagination, Sort>;
+  tableProps: IUseTableForwardedProps<Pagination, Sort>;
 } & IUseTableResult<Pagination, Sort>;
 
 type TableState = {
@@ -108,4 +116,5 @@ export {
   TableState,
   UseTableAction,
   AllColumns,
+  IUseTableForwardedProps,
 };

@@ -14,22 +14,15 @@
  * limitations under the License.
  */
 
-import { PropsWithChildren, ReactElement } from "react";
-import { Column, ColumnType } from "../../types";
-
-type TableConfigComponents = Partial<
-  Record<
-    ColumnType,
-    (value: any, rowData: Record<string, any>, column: Column) => ReactElement
-  >
->;
+import { PropsWithChildren } from "react";
+import { TableComponents } from "../../types";
 
 type TableConfigProviderProps = PropsWithChildren<{}> & {
-  components?: TableConfigComponents;
+  components?: TableComponents;
 };
 
 type TableConfigValue = {
-  components: TableConfigComponents;
+  components: TableComponents;
 };
 
-export { TableConfigProviderProps, TableConfigValue, TableConfigComponents };
+export { TableConfigProviderProps, TableConfigValue };
