@@ -60,6 +60,8 @@ function tableReducer(state: TableState, action: UseTableAction) {
       return {
         ...state,
         filters: payload,
+        //   reset expanded rows when filters change
+        expandedRows: {},
       };
     case "resetAllFilters":
       return {
