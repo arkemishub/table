@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Column, ExpandileState, Filter, Sort } from "../../types";
+import { Column, ExpandedState, Filter, Sort } from "../../types";
 
 type AllColumns = Array<
   Column & {
@@ -34,15 +34,17 @@ type IPaginationConfig = {
 
 type ISortConfig = { default?: Sort[]; sortable?: boolean; type?: "custom" };
 
-interface IUseTableConfig<Pagination, Sort> {
+interface IUseTableConfig<Pagination, Sort, Expandable> {
   pagination?: Pagination;
   columns: Column[];
   sorting?: ISortConfig;
+  expandable?: Expandable;
 }
 
 interface IPaginationData {
   goToPage: (page: number) => void;
   setPageSize: (size: number) => void;
+  pageSize: number;
   pageCount: number;
   pages: number[];
   currentPage: number;
@@ -67,23 +69,27 @@ type ISortData = {
   sortType?: "custom";
 };
 
-type IUseTableResult<Pagination, Sort> = (Pagination extends undefined
-  ? undefined
-  : IPaginationData) &
-  (Sort extends undefined ? undefined : ISortData) &
-  IColumnsData;
+type IExpandableData = {
+  expandedRows: ExpandedState;
+};
 
-type IUseTableForwardedProps<Pagination, Sort> = IUseTableResult<
+type IUseTableResult<Pagination, Sort, Expandable> =
+  (Pagination extends undefined ? undefined : IPaginationData) &
+    (Sort extends undefined ? undefined : ISortData) &
+    (Expandable extends true ? IExpandableData : undefined) &
+    IColumnsData;
+
+type IUseTableForwardedProps<Pagination, Sort, Expandable> = IUseTableResult<
   Pagination,
-  Sort
+  Sort,
+  Expandable
 > & {
-  expandedRows?: ExpandileState;
   onExpandRow?: (index: number) => void;
 };
 
-type IUseTableData<Pagination, Sort> = {
-  tableProps: IUseTableForwardedProps<Pagination, Sort>;
-} & IUseTableResult<Pagination, Sort>;
+type IUseTableData<Pagination, Sort, Expandable> = {
+  tableProps: IUseTableForwardedProps<Pagination, Sort, Expandable>;
+} & IUseTableResult<Pagination, Sort, Expandable>;
 
 type TableState = {
   currentPage: number;
@@ -91,6 +97,7 @@ type TableState = {
   visibleColumns: string[];
   filters: Filter[];
   sort: Sort[];
+  expandedRows: ExpandedState;
 };
 
 type UseTableAction =
@@ -104,7 +111,8 @@ type UseTableAction =
   | { type: "refresh"; payload: Partial<TableState> }
   | { type: "setFilters"; payload: Filter[] }
   | { type: "resetAllFilters"; payload: undefined }
-  | { type: "setSort"; payload: Sort[] };
+  | { type: "setSort"; payload: Sort[] }
+  | { type: "setExpandedRows"; payload: number };
 
 export {
   IUseTableData,

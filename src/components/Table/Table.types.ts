@@ -16,11 +16,7 @@
 
 import { CSSProperties, ReactNode } from "react";
 import { Column, TableComponents } from "../../types";
-import {
-  IPaginationData,
-  ISortData,
-  IUseTableForwardedProps,
-} from "../../hooks";
+import { IUseTableForwardedProps } from "../../hooks";
 
 type ITableProps = {
   /**
@@ -32,7 +28,7 @@ type ITableProps = {
   noResult?: ReactNode;
   renderHeader?: (column: Column) => ReactNode;
   components?: TableComponents;
-} & Partial<IUseTableForwardedProps<any, any>>;
+} & Partial<IUseTableForwardedProps<any, any, any>>;
 
 interface ActionsConfig {
   label: string;

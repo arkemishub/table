@@ -16,11 +16,14 @@
 
 import { Action, ITableProps } from "./Table.types";
 import { Pagination } from "../Pagination";
-import { Fragment, ReactNode, useCallback } from "react";
+import { Fragment, ReactNode, useCallback, useMemo } from "react";
 import pagination from "../Pagination/Pagination";
 import { useTableConfig } from "../TableConfigProvider/TableConfigProvider";
 import { Column } from "../../types";
 import { TableHeadCell } from "../TableHeadCell";
+
+const getPagedIndex = (index: number, currentPage: number, pageSize = 0) =>
+  index + pageSize * currentPage;
 
 function Table({
   columns,
@@ -28,6 +31,7 @@ function Table({
   actions,
   pages,
   pageCount,
+  pageSize,
   currentPage = 0,
   goToPage,
   paginationType,
@@ -42,13 +46,17 @@ function Table({
   ...props
 }: ITableProps) {
   const config = useTableConfig();
-  const components = props.components ?? config.components;
+  const components = useMemo(
+    () => ({ ...config.components, ...props.components }),
+    [config.components, props.components]
+  );
 
   const renderData = useCallback(
     (column: Column, row: Record<string, unknown>, index: number) => {
       if (column.render) {
         return column.render(row, {
-          handleExpandRow: () => onExpandRow?.(index),
+          handleExpandRow: () =>
+            onExpandRow?.(getPagedIndex(index, currentPage, pageSize)),
         });
       }
 
@@ -58,20 +66,24 @@ function Table({
 
       return row?.[column.id] as ReactNode;
     },
-    [components, onExpandRow]
+    [components, onExpandRow, currentPage, pageSize]
   );
 
   const renderExpanded = useCallback(
     (row: Record<string, unknown>, index: number) => {
-      if (!expandedRows?.[index] || !components.ExpandedRow) return null;
+      if (
+        !expandedRows?.[getPagedIndex(index, currentPage, pageSize)] ||
+        !components.ExpandedRow
+      )
+        return null;
 
       return (
-        <tr>
+        <tr className="arke__table__row--expanded">
           <td colSpan={columns.length}>{components.ExpandedRow(row)}</td>
         </tr>
       );
     },
-    [expandedRows]
+    [expandedRows, currentPage, pageSize, columns.length, components]
   );
 
   const noResultColspan = actions
@@ -152,7 +164,6 @@ function Table({
                       </td>
                     )}
                   </tr>
-
                   {renderExpanded(row, index)}
                 </Fragment>
               ))
