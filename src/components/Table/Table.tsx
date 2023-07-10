@@ -69,6 +69,11 @@ function Table({
     [components, onExpandRow, currentPage, pageSize]
   );
 
+  const displayedColumnCount = useMemo(
+    () => (actions ? actions.actions.length + columns.length : columns.length),
+    [columns.length, actions?.actions.length]
+  );
+
   const renderExpanded = useCallback(
     (row: Record<string, unknown>, index: number) => {
       if (
@@ -79,16 +84,12 @@ function Table({
 
       return (
         <tr className="arke__table__row--expanded">
-          <td colSpan={columns.length}>{components.ExpandedRow(row)}</td>
+          <td colSpan={displayedColumnCount}>{components.ExpandedRow(row)}</td>
         </tr>
       );
     },
     [expandedRows, currentPage, pageSize, columns.length, components]
   );
-
-  const noResultColspan = actions
-    ? actions.actions.length + columns.length
-    : columns.length;
 
   return (
     <>
@@ -169,7 +170,7 @@ function Table({
               ))
             : noResult && (
                 <tr className="arke__table__noresult">
-                  <td colSpan={noResultColspan}>{noResult}</td>
+                  <td colSpan={displayedColumnCount}>{noResult}</td>
                 </tr>
               )}
         </tbody>
