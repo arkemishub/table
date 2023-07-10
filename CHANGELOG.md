@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/arkemishub/table/compare/v0.7.2...v0.8.0) (2023-07-10)
+
+
+### Features
+
+* expandable rows ([#12](https://github.com/arkemishub/table/issues/12)) ([45350c4](https://github.com/arkemishub/table/commit/45350c4f855fc08c96c966431d1882964e787272))
+
 ## [0.7.2](https://github.com/arkemishub/table/compare/v0.7.1...v0.7.2) (2023-06-30)
 
 
