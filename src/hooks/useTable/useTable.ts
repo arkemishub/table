@@ -19,6 +19,7 @@ import usePagination from "../usePagination";
 import type { Column, Filter, Sort } from "../../types";
 import type {
   IPaginationConfig,
+  ISortConfig,
   IUseTableConfig,
   IUseTableData,
   TableState,
@@ -59,6 +60,8 @@ function tableReducer(state: TableState, action: UseTableAction) {
       return {
         ...state,
         filters: payload,
+        //   reset expanded rows when filters change
+        expandedRows: {},
       };
     case "resetAllFilters":
       return {
@@ -70,6 +73,15 @@ function tableReducer(state: TableState, action: UseTableAction) {
         ...state,
         sort: payload,
       };
+    case "setExpandedRows":
+      return {
+        ...state,
+        expandedRows: {
+          ...state.expandedRows,
+          [payload]: !state.expandedRows[payload],
+        },
+      };
+
     case "refresh":
       return { ...state, ...payload };
     default:
@@ -79,18 +91,22 @@ function tableReducer(state: TableState, action: UseTableAction) {
 
 function useTable<
   P extends IPaginationConfig | undefined,
-  S extends boolean | undefined
->(config: IUseTableConfig<P, S> | null): IUseTableData<P, S> {
-  const { pagination, columns, sorting } = config ?? {};
+  S extends ISortConfig | undefined,
+  E extends boolean
+>(config: IUseTableConfig<P, S, E> | null): IUseTableData<P, S, E> {
+  const { pagination, columns, sorting, expandable } = config ?? {};
   const [prevConfig, setPrevConfig] = useState(config ?? null);
-  const [{ currentPage, pageSize, visibleColumns, filters, sort }, dispatch] =
-    useReducer(tableReducer, {
-      currentPage: pagination?.initialPage || 0,
-      pageSize: pagination?.pageSize || 10,
-      visibleColumns: columns?.filter((c) => !c.hidden).map((c) => c.id) ?? [],
-      filters: [],
-      sort: sorting?.default ?? [],
-    });
+  const [
+    { currentPage, pageSize, visibleColumns, filters, sort, expandedRows },
+    dispatch,
+  ] = useReducer(tableReducer, {
+    currentPage: pagination?.initialPage || 0,
+    pageSize: pagination?.pageSize || 10,
+    visibleColumns: columns?.filter((c) => !c.hidden).map((c) => c.id) ?? [],
+    filters: [],
+    sort: sorting?.default ?? [],
+    expandedRows: {},
+  });
 
   if (JSON.stringify(config) !== JSON.stringify(prevConfig)) {
     setPrevConfig(config);
@@ -125,6 +141,7 @@ function useTable<
         dispatch({ type: "updatePageSize", payload: size }),
       pageCount,
       pages,
+      pageSize,
       currentPage,
       paginationType: pagination.type,
       totalCount: pagination?.totalCount ?? 0,
@@ -165,9 +182,18 @@ function useTable<
         sortType: sorting.type,
       };
     }
+
+    if (expandable) {
+      data = {
+        ...data,
+        expandedRows,
+        onExpandRow: (id: number) =>
+          dispatch({ type: "setExpandedRows", payload: id }),
+      };
+    }
   }
 
-  return { tableProps: data, ...data } as IUseTableData<P, S>;
+  return { tableProps: data, ...data } as IUseTableData<P, S, E>;
 }
 
 export default useTable;

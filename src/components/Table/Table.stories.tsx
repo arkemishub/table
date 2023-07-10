@@ -20,7 +20,7 @@ import { ITableProps } from "./Table.types";
 import mockData from "../../__mocks__/mockData";
 import { useTable } from "../../hooks";
 import mockColumns from "../../__mocks__/mockColumns";
-import { Column, SortType } from "../../types";
+import { Column, ExpandedState, SortType } from "../../types";
 
 export default {
   title: "Table",
@@ -336,6 +336,105 @@ export const WithActions = (args: Partial<ITableProps>) => {
         ],
       }}
       {...args}
+    />
+  );
+};
+
+export const ExpandableState = (args: Partial<ITableProps>) => {
+  const [expandedRows, setExpandedRows] = useState<ExpandedState>({});
+  const data = mockData;
+  const pageSize = 10;
+
+  const columns: Column[] = [
+    {
+      id: "toggle",
+      label: "toggle",
+      render: (_, { handleExpandRow }) => (
+        <button onClick={handleExpandRow}>{`->`}</button>
+      ),
+    },
+    ...mockColumns,
+  ];
+
+  const { tableProps, currentPage } = useTable({
+    pagination: {
+      totalCount: 100,
+    },
+    columns,
+  });
+
+  const pagedData = data.slice(
+    currentPage * pageSize,
+    (currentPage + 1) * pageSize
+  );
+
+  const handleExpandRow = (index: number) => {
+    setExpandedRows((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+  };
+
+  return (
+    <Table
+      {...tableProps}
+      data={pagedData}
+      {...args}
+      onExpandRow={handleExpandRow}
+      expandedRows={expandedRows}
+      components={{
+        ExpandedRow: (rowData) => (
+          <div>
+            <div>Expanded row</div>
+            <div>{JSON.stringify(rowData)}</div>
+          </div>
+        ),
+      }}
+    />
+  );
+};
+
+export const ExpandableUseTable = (args: Partial<ITableProps>) => {
+  const data = mockData;
+  const pageSize = 10;
+
+  const columns: Column[] = [
+    {
+      id: "toggle",
+      label: "toggle",
+      render: (_, { handleExpandRow }) => (
+        <button onClick={handleExpandRow}>{`->`}</button>
+      ),
+    },
+    ...mockColumns,
+  ];
+
+  const { tableProps, currentPage, expandedRows } = useTable({
+    pagination: {
+      totalCount: 100,
+    },
+    expandable: true,
+    columns,
+  });
+
+  const pagedData = data.slice(
+    currentPage * pageSize,
+    (currentPage + 1) * pageSize
+  );
+
+  return (
+    <Table
+      {...tableProps}
+      data={pagedData}
+      {...args}
+      components={{
+        ExpandedRow: (rowData) => (
+          <div>
+            <div>Expanded row</div>
+            <div>{JSON.stringify(rowData)}</div>
+          </div>
+        ),
+      }}
     />
   );
 };

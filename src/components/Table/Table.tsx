@@ -16,11 +16,14 @@
 
 import { Action, ITableProps } from "./Table.types";
 import { Pagination } from "../Pagination";
-import { ReactNode, useCallback, useMemo, useState } from "react";
+import { Fragment, ReactNode, useCallback, useMemo } from "react";
 import pagination from "../Pagination/Pagination";
 import { useTableConfig } from "../TableConfigProvider/TableConfigProvider";
 import { Column } from "../../types";
 import { TableHeadCell } from "../TableHeadCell";
+
+const getPagedIndex = (index: number, currentPage: number, pageSize = 0) =>
+  index + pageSize * currentPage;
 
 function Table({
   columns,
@@ -28,6 +31,7 @@ function Table({
   actions,
   pages,
   pageCount,
+  pageSize,
   currentPage = 0,
   goToPage,
   paginationType,
@@ -37,13 +41,23 @@ function Table({
   sortType,
   noResult = "No Result",
   renderHeader,
+  expandedRows,
+  onExpandRow,
+  ...props
 }: ITableProps) {
-  const { components } = useTableConfig();
+  const config = useTableConfig();
+  const components = useMemo(
+    () => ({ ...config.components, ...props.components }),
+    [config.components, props.components]
+  );
 
   const renderData = useCallback(
-    (column: Column, row: Record<string, unknown>) => {
+    (column: Column, row: Record<string, unknown>, index: number) => {
       if (column.render) {
-        return column.render(row);
+        return column.render(row, {
+          handleExpandRow: () =>
+            onExpandRow?.(getPagedIndex(index, currentPage, pageSize)),
+        });
       }
 
       if (column.type && components[column.type]) {
@@ -52,12 +66,30 @@ function Table({
 
       return row?.[column.id] as ReactNode;
     },
-    [components]
+    [components, onExpandRow, currentPage, pageSize]
   );
 
-  const noResultColspan = actions
-    ? actions.actions.length + columns.length
-    : columns.length;
+  const displayedColumnCount = useMemo(
+    () => (actions ? actions.actions.length + columns.length : columns.length),
+    [columns.length, actions?.actions.length]
+  );
+
+  const renderExpanded = useCallback(
+    (row: Record<string, unknown>, index: number) => {
+      if (
+        !expandedRows?.[getPagedIndex(index, currentPage, pageSize)] ||
+        !components.ExpandedRow
+      )
+        return null;
+
+      return (
+        <tr className="arke__table__row--expanded">
+          <td colSpan={displayedColumnCount}>{components.ExpandedRow(row)}</td>
+        </tr>
+      );
+    },
+    [expandedRows, currentPage, pageSize, columns.length, components]
+  );
 
   return (
     <>
@@ -87,55 +119,58 @@ function Table({
         <tbody>
           {data?.length > 0
             ? data.map((row, index) => (
-                <tr key={index}>
-                  {actions && actions.position !== "end" && (
-                    <td
-                      className={`${
-                        actions?.className ?? ""
-                      } arke__table__actions`}
-                      style={actions?.style}
-                    >
-                      {actions.actions.map((action, index) => (
-                        <TableAction
-                          key={index}
-                          content={action.content}
-                          data={row}
-                          onClick={action.onClick}
-                        />
-                      ))}
-                    </td>
-                  )}
-                  {columns.map((col) => (
-                    <td
-                      key={col.id}
-                      className={col?.className}
-                      style={col?.style}
-                    >
-                      {renderData(col, row)}
-                    </td>
-                  ))}
-                  {actions && actions.position === "end" && (
-                    <td
-                      className={`${
-                        actions?.className ?? ""
-                      } arke__table__actions`}
-                      style={actions?.style}
-                    >
-                      {actions.actions.map((action, index) => (
-                        <TableAction
-                          key={index}
-                          content={action.content}
-                          data={row}
-                          onClick={action.onClick}
-                        />
-                      ))}
-                    </td>
-                  )}
-                </tr>
+                <Fragment key={index}>
+                  <tr>
+                    {actions && actions.position !== "end" && (
+                      <td
+                        className={`${
+                          actions?.className ?? ""
+                        } arke__table__actions`}
+                        style={actions?.style}
+                      >
+                        {actions.actions.map((action, index) => (
+                          <TableAction
+                            key={index}
+                            content={action.content}
+                            data={row}
+                            onClick={action.onClick}
+                          />
+                        ))}
+                      </td>
+                    )}
+                    {columns.map((col) => (
+                      <td
+                        key={col.id}
+                        className={col?.className}
+                        style={col?.style}
+                      >
+                        {renderData(col, row, index)}
+                      </td>
+                    ))}
+                    {actions && actions.position === "end" && (
+                      <td
+                        className={`${
+                          actions?.className ?? ""
+                        } arke__table__actions`}
+                        style={actions?.style}
+                      >
+                        {actions.actions.map((action, index) => (
+                          <TableAction
+                            key={index}
+                            content={action.content}
+                            data={row}
+                            onClick={action.onClick}
+                          />
+                        ))}
+                      </td>
+                    )}
+                  </tr>
+                  {renderExpanded(row, index)}
+                </Fragment>
               ))
             : noResult && (
                 <tr className="arke__table__noresult">
-                  <td colSpan={noResultColspan}>{noResult}</td>
+                  <td colSpan={displayedColumnCount}>{noResult}</td>
                 </tr>
               )}
         </tbody>

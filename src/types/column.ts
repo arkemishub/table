@@ -31,7 +31,10 @@ export type Column = {
   id: string;
   label: string;
   renderHeader?: () => string | number | ReactNode;
-  render?: (data: Record<string, unknown>) => string | number | ReactNode;
+  render?: (
+    data: Record<string, unknown>,
+    actions: { handleExpandRow: () => void }
+  ) => string | number | ReactNode;
   className?: string;
   style?: CSSProperties;
   type?: ColumnType;

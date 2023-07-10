@@ -16,13 +16,13 @@
 
 import { createContext, useContext } from "react";
 import {
-  TableConfigComponents,
   TableConfigProviderProps,
   TableConfigValue,
 } from "./TableConfigProvider.types";
+import { TableComponents } from "../../types";
 
 const TableContext = createContext<TableConfigValue>({
-  components: {} as TableConfigComponents,
+  components: {} as TableComponents,
 });
 
 function TableConfigProvider({
@@ -31,7 +31,7 @@ function TableConfigProvider({
 }: TableConfigProviderProps) {
   return (
     <TableContext.Provider
-      value={{ components: components ?? ({} as TableConfigComponents) }}
+      value={{ components: components ?? ({} as TableComponents) }}
     >
       {children}
     </TableContext.Provider>
