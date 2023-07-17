@@ -10,6 +10,7 @@ const sidebarConfig = [
   { title: "Pagination", href: "/docs/examples/pagination" },
   { title: "Custom pagination", href: "/docs/examples/custom-pagination" },
   { title: "Sort", href: "/docs/examples/sort" },
+  { title: "Custom Sort", href: "/docs/examples/custom-sort" },
 ];
 
 export default sidebarConfig;

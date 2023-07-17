@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { Action, ITableProps } from "./Table.types";
+import { ITableProps } from "./Table.types";
 import { Pagination } from "../Pagination";
 import { Fragment, ReactNode, useCallback, useMemo } from "react";
 import pagination from "../Pagination/Pagination";
 import { useTableConfig } from "../TableConfigProvider/TableConfigProvider";
-import { Column } from "../../types";
+import { Action, Column } from "../../types";
 import { TableHeadCell } from "../TableHeadCell";
 
 const getPagedIndex = (index: number, currentPage: number, pageSize = 0) =>

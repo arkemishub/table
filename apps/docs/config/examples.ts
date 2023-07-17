@@ -2,6 +2,7 @@ import Basic from "@/examples/basic";
 import Pagination from "@/examples/pagination";
 import CustomPagination from "@/examples/custom-pagination";
 import DefaultSort from "@/examples/sort";
+import CustomSort from "@/examples/custom-sort";
 
 const examples = [
   {
@@ -19,6 +20,10 @@ const examples = [
   {
     id: "sort",
     component: DefaultSort,
+  },
+  {
+    id: "custom-sort",
+    component: CustomSort,
   },
 ];
 
