@@ -1,10 +1,7 @@
-import { Button, Header } from "ui";
-
-export default function Page() {
+export default function Home() {
   return (
-    <>
-      <Header text="Docs" />
-      <Button />
-    </>
+    <div>
+      <h1 className="mb-8 text-center text-3xl font-bold">Arke Table</h1>
+    </div>
   );
 }
