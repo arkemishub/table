@@ -7,10 +7,18 @@ const sidebarConfig = [
   { title: "TableConfigProvider", href: "/docs/api/table-config-provider" },
   { title: "Examples" },
   { title: "Basic", href: "/docs/examples/basic" },
-  { title: "Pagination", href: "/docs/examples/pagination" },
   { title: "Custom pagination", href: "/docs/examples/custom-pagination" },
-  { title: "Sort", href: "/docs/examples/sort" },
-  { title: "Custom Sort", href: "/docs/examples/custom-sort" },
+  { title: "Custom Sorting", href: "/docs/examples/custom-sort" },
+  { title: "Column Hiding", href: "/docs/examples/column-hiding" },
+  { title: "Expandable", href: "/docs/examples/expandable" },
+  { title: "Filtering", href: "/docs/examples/filtering" },
+  { title: "Sorting", href: "/docs/examples/sort" },
+  { title: "Pagination", href: "/docs/examples/pagination" },
+  { title: "" },
+  {
+    title: "TableConfigProvider",
+    href: "/docs/examples/table-config-provider",
+  },
 ];
 
 export default sidebarConfig;

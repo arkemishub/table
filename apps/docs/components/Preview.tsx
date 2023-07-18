@@ -23,12 +23,12 @@ function Preview({
         <Tabs.Tab>Preview</Tabs.Tab>
         <Tabs.Tab>Code</Tabs.Tab>
         <Tabs.TabPanel>
-          <div className="rounded-theme bg-background-400 h-[300px] overflow-auto p-8 md:h-[400px]">
+          <div className="rounded-theme bg-background-400 h-[300px] overflow-auto p-8 md:h-[600px]">
             <Component />
           </div>
         </Tabs.TabPanel>
         <Tabs.TabPanel>
-          <div className="rounded-theme bg-background-400 max-h-[300px] overflow-y-auto md:max-h-[400px]">
+          <div className="rounded-theme bg-background-400 max-h-[300px] overflow-y-auto md:max-h-[600px]">
             {children}
           </div>
         </Tabs.TabPanel>

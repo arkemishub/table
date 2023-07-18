@@ -3,6 +3,10 @@ import Pagination from "@/examples/pagination";
 import CustomPagination from "@/examples/custom-pagination";
 import DefaultSort from "@/examples/sort";
 import CustomSort from "@/examples/custom-sort";
+import ColumnHiding from "@/examples/column-hiding";
+import Filtering from "@/examples/filtering";
+import Expandable from "@/examples/expandable";
+import TableConfigProvider from "@/examples/table-config-provider";
 
 const examples = [
   {
@@ -24,6 +28,22 @@ const examples = [
   {
     id: "custom-sort",
     component: CustomSort,
+  },
+  {
+    id: "column-hiding",
+    component: ColumnHiding,
+  },
+  {
+    id: "filtering",
+    component: Filtering,
+  },
+  {
+    id: "expandable",
+    component: Expandable,
+  },
+  {
+    id: "table-config-provider",
+    component: TableConfigProvider,
   },
 ];
 
