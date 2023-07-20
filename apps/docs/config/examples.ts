@@ -7,6 +7,7 @@ import ColumnHiding from "@/examples/column-hiding";
 import Filtering from "@/examples/filtering";
 import Expandable from "@/examples/expandable";
 import TableConfigProvider from "@/examples/table-config-provider";
+import ExpandableState from "@/examples/expandable-state";
 
 const examples = [
   {
@@ -40,6 +41,10 @@ const examples = [
   {
     id: "expandable",
     component: Expandable,
+  },
+  {
+    id: "expandable-state",
+    component: ExpandableState,
   },
   {
     id: "table-config-provider",

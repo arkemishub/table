@@ -7,8 +7,6 @@ const sidebarConfig = [
   { title: "TableConfigProvider", href: "/docs/api/table-config-provider" },
   { title: "Examples" },
   { title: "Basic", href: "/docs/examples/basic" },
-  { title: "Custom pagination", href: "/docs/examples/custom-pagination" },
-  { title: "Custom Sorting", href: "/docs/examples/custom-sort" },
   { title: "Column Hiding", href: "/docs/examples/column-hiding" },
   { title: "Expandable", href: "/docs/examples/expandable" },
   { title: "Filtering", href: "/docs/examples/filtering" },

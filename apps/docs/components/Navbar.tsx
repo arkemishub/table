@@ -24,7 +24,7 @@ function Navbar() {
         </nav>
         <div className="ml-auto flex items-center">
           <a
-            href="https://github.com/arkemishub/ui"
+            href="https://github.com/arkemishub/table"
             className="rounded-theme-sm hover:bg-background-400 p-2 transition-all"
             target="_blank"
           >
