@@ -2,8 +2,9 @@
   "name": "@arkejs/table",
   "version": "0.8.0",
   "description": "Arke Table component",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "pnpm clean && tsup",
     "clean": "rm -rf dist"

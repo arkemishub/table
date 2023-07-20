@@ -1,6 +1,6 @@
 import { Column } from "@arkejs/table";
 
-const columns: Column[] = [
+const mockColumns: Column[] = [
   { label: "ID", id: "id" },
   { label: "Name", id: "first_name", type: "string" },
   {
@@ -19,4 +19,4 @@ const columns: Column[] = [
   { label: "IP Address", id: "ip_address", sortable: false },
 ];
 
-export default columns;
+export default mockColumns;

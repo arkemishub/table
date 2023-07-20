@@ -1,26 +1,13 @@
-/**
- * Copyright 2023 Arkemis S.r.l.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import { Table } from "./index";
-import React, { useEffect, useState } from "react";
-import { ITableProps } from "./Table.types";
-import mockData from "../../__mocks__/mockData";
-import { useTable } from "../../hooks";
-import mockColumns from "../../__mocks__/mockColumns";
-import { Column, ExpandedState, SortType } from "../../types";
+import {
+  Column,
+  ExpandedState,
+  ITableProps,
+  Table,
+  useTable,
+} from "@arkejs/table";
+import mockData from "../mocks/mockData";
+import mockColumns from "../mocks/mockColumns";
+import { useEffect, useState } from "react";
 
 export default {
   title: "Table",
@@ -179,7 +166,7 @@ export const WithCustomSorting = (args: Partial<ITableProps>) => {
 
   return (
     <>
-      <button onClick={() => setSort([{ columnId: "id", type: SortType.ASC }])}>
+      <button onClick={() => setSort([{ columnId: "id", type: "asc" }])}>
         Sort by ID
       </button>
       <button onClick={() => setSort([])}>Reset</button>
@@ -409,7 +396,7 @@ export const ExpandableUseTable = (args: Partial<ITableProps>) => {
     ...mockColumns,
   ];
 
-  const { tableProps, currentPage, expandedRows } = useTable({
+  const { tableProps, currentPage } = useTable({
     pagination: {
       totalCount: 100,
     },

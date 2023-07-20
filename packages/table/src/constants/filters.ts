@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ColumnType, FilterOperator } from "../types";
+import { FilterOperator } from "../types";
 
 const numericFilters = [
   FilterOperator.EQ,
@@ -25,18 +25,18 @@ const numericFilters = [
 ];
 
 const filters = {
-  [ColumnType.String]: [
+  string: [
     FilterOperator.ICONTAINS,
     FilterOperator.ISTARTSWITH,
     FilterOperator.IENDSWITH,
     FilterOperator.EQ,
   ],
-  [ColumnType.Bool]: [FilterOperator.EQ],
-  [ColumnType.Integer]: numericFilters,
-  [ColumnType.Float]: numericFilters,
-  [ColumnType.Date]: numericFilters,
-  [ColumnType.Datetime]: numericFilters,
-  [ColumnType.Time]: numericFilters,
+  boolean: [FilterOperator.EQ],
+  integer: numericFilters,
+  float: numericFilters,
+  date: numericFilters,
+  datetime: numericFilters,
+  time: numericFilters,
 };
 
 export default filters;

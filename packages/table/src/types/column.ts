@@ -17,16 +17,6 @@
 import { CSSProperties, ReactNode } from "react";
 import { FilterOperator } from "./filters";
 
-export enum ColumnType {
-  Bool = "boolean",
-  Date = "date",
-  Datetime = "datetime",
-  Float = "float",
-  Integer = "integer",
-  String = "string",
-  Time = "time",
-}
-
 export type Column = {
   id: string;
   label: string;
@@ -37,7 +27,14 @@ export type Column = {
   ) => string | number | ReactNode;
   className?: string;
   style?: CSSProperties;
-  type?: ColumnType;
+  type?:
+    | "boolean"
+    | "date"
+    | "datetime"
+    | "float"
+    | "integer"
+    | "string"
+    | "time";
   availableFilterOperators?: Array<FilterOperator>;
   sortable?: boolean;
   hidden?: boolean;

@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-enum SortType {
-  ASC = "asc",
-  DESC = "desc",
-}
-
 type Sort = {
-  type: SortType;
+  type: "asc" | "desc";
   columnId: string;
 };
 
-export { Sort, SortType };
+export { Sort };

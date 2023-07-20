@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import { Column, SortType } from "../../types";
+import { Column } from "../../types";
 import { ISortData } from "../../hooks";
 import { useCallback, useMemo } from "react";
 
-function Icon({ type }: { type: SortType }) {
+function Icon({ type }: { type: "asc" | "desc" }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@ function Icon({ type }: { type: SortType }) {
         marginLeft: 4,
         height: 12,
         width: 12,
-        ...(type === SortType.ASC ? { transform: "rotate(180deg)" } : {}),
+        ...(type === "asc" ? { transform: "rotate(180deg)" } : {}),
       }}
     >
       <path
@@ -67,13 +67,13 @@ function TableHeadCell({
       const newSort = sort?.filter((s) => s.columnId !== id) ?? [];
 
       if (columnSort) {
-        if (columnSort.type === SortType.ASC) {
-          setSort?.([...newSort, { columnId: id, type: SortType.DESC }]);
+        if (columnSort.type === "asc") {
+          setSort?.([...newSort, { columnId: id, type: "desc" }]);
         } else {
           setSort?.(newSort);
         }
       } else {
-        setSort?.([...newSort, { columnId: id, type: SortType.ASC }]);
+        setSort?.([...newSort, { columnId: id, type: "asc" }]);
       }
     }
   }, [columnSort, id, setSort, sort, isSortingEnabled]);

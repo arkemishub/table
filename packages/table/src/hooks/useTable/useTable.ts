@@ -158,7 +158,8 @@ function useTable<
           dispatch({ type: "toggleVisibleItem", payload: c.id }),
         hidden: !visibleColumns.includes(c.id),
         availableFilterOperators:
-          c?.availableFilterOperators ?? (c?.type && availableFilters[c.type]),
+          c?.availableFilterOperators ??
+          (c?.type && availableFilters?.[c.type]),
       })),
       toggleHide: (columns: Column[]) =>
         dispatch({ type: "toggleMultipleVisibleItems", payload: columns }),

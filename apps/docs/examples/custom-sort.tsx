@@ -1,4 +1,4 @@
-import { SortType, Table, useTable } from "@arkejs/table";
+import { Table, useTable } from "@arkejs/table";
 import columns from "@/examples/mocks/columns";
 import data from "@/examples/mocks/data";
 
@@ -16,7 +16,7 @@ function CustomSort() {
       <div className="flex gap-4">
         <button
           className="btn btn--primary"
-          onClick={() => setSort([{ columnId: "id", type: SortType.ASC }])}
+          onClick={() => setSort([{ columnId: "id", type: "asc" }])}
         >
           Sort by ID
         </button>

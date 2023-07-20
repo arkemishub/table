@@ -1,9 +1,9 @@
-import { Column, ColumnType } from "./column";
+import { Column } from "./column";
 import { ReactElement } from "react";
 
 type TableComponents = Partial<
   Record<
-    ColumnType,
+    string,
     (value: any, rowData: Record<string, any>, column: Column) => ReactElement
   >
 > & {
