@@ -6,8 +6,8 @@ import MobileNavbar from "@/components/MobileNavbar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Arke UI",
-  description: "Arke UI component library based on Tailwind CSS",
+  title: "Arke Table",
+  description: "Arke Table - Headless table component",
 };
 
 export default function RootLayout({

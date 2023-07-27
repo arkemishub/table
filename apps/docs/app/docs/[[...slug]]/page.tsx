@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doc = allDocs.find((doc) => doc.path === params.slug.join("/"));
 
   return {
-    title: `Arke UI - ${doc?.title}`,
+    title: `Arke Tables - ${doc?.title}`,
   };
 }
 
