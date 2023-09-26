@@ -128,14 +128,16 @@ function Table({
                         } arke__table__actions`}
                         style={actions?.style}
                       >
-                        {actions.actions.map((action, index) => (
-                          <TableAction
-                            key={index}
-                            content={action.content}
-                            data={row}
-                            onClick={action.onClick}
-                          />
-                        ))}
+                        {actions.actions
+                          .filter((action) => action.hidden !== false)
+                          .map((action, index) => (
+                            <TableAction
+                              key={index}
+                              content={action.content}
+                              data={row}
+                              onClick={action.onClick}
+                            />
+                          ))}
                       </td>
                     )}
                     {columns.map((col) => (

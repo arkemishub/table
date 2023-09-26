@@ -41,6 +41,7 @@ interface ActionsConfig {
 interface Action {
   content: ((data: Record<string, unknown>) => ReactNode) | ReactNode;
   onClick?: (data: Record<string, unknown>) => void;
+  hidden?: boolean;
 }
 
 export { ITableProps, Action };
