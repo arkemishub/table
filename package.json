@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "prepare": "npm run build",
     "build": "node esbuild.js && tsc --emitDeclarationOnly --outDir dist",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
