@@ -97,6 +97,7 @@ type TableState = {
   pageSize: number;
   visibleColumns: string[];
   filters: Filter[];
+  initialFilters: Filter[];
   sort: Sort[];
   expandedRows: ExpandedState;
   initialFilters: Filter[];
