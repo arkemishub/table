@@ -39,6 +39,7 @@ interface IUseTableConfig<Pagination, Sort, Expandable> {
   columns: Column[];
   sorting?: ISortConfig;
   expandable?: Expandable;
+  initialFilters?: Filter[];
 }
 
 interface IPaginationData {
@@ -98,6 +99,7 @@ type TableState = {
   filters: Filter[];
   sort: Sort[];
   expandedRows: ExpandedState;
+  initialFilters: Filter[];
 };
 
 type UseTableAction =
