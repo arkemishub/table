@@ -66,7 +66,7 @@ function tableReducer(state: TableState, action: UseTableAction) {
     case "resetAllFilters":
       return {
         ...state,
-        filters: [],
+        filters: state.initialFilters ?? [],
       };
     case "setSort":
       return {
@@ -94,7 +94,8 @@ function useTable<
   S extends ISortConfig | undefined,
   E extends boolean
 >(config: IUseTableConfig<P, S, E> | null): IUseTableData<P, S, E> {
-  const { pagination, columns, sorting, expandable } = config ?? {};
+  const { pagination, columns, sorting, expandable, initialFilters } =
+    config ?? {};
   const [prevConfig, setPrevConfig] = useState(config ?? null);
   const [
     { currentPage, pageSize, visibleColumns, filters, sort, expandedRows },
@@ -103,7 +104,8 @@ function useTable<
     currentPage: pagination?.initialPage || 0,
     pageSize: pagination?.pageSize || 10,
     visibleColumns: columns?.filter((c) => !c.hidden).map((c) => c.id) ?? [],
-    filters: [],
+    filters: initialFilters ?? [],
+    initialFilters: initialFilters ?? [],
     sort: sorting?.default ?? [],
     expandedRows: {},
   });
