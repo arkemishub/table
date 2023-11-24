@@ -1,0 +1,5 @@
+---
+"@arkejs/table": patch
+---
+
+merge

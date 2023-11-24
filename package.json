@@ -1,61 +1,38 @@
 {
-  "name": "@arkejs/table",
-  "version": "0.9.0",
-  "description": "Arke Table component",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "name": "table",
+  "packageManager": "pnpm@8.7.6",
+  "private": true,
   "scripts": {
-    "prepare": "npm run build",
-    "build": "node esbuild.js && tsc --emitDeclarationOnly --outDir dist",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "semantic-release": "semantic-release"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "release": "changeset publish"
   },
-  "keywords": [
-    "arke",
-    "table"
-  ],
-  "author": "Arkemis S.r.l.",
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addon-interactions": "^6.5.16",
-    "@storybook/addon-links": "^6.5.16",
-    "@storybook/builder-webpack5": "^6.5.16",
-    "@storybook/manager-webpack5": "^6.5.16",
-    "@storybook/react": "^6.5.16",
-    "@storybook/testing-library": "^0.0.14-next.1",
-    "@types/react": "^18.0.28",
-    "@typescript-eslint/eslint-plugin": "^5.50.0",
-    "@typescript-eslint/parser": "^5.50.0",
-    "esbuild": "^0.17.10",
-    "esbuild-node-externals": "^1.6.0",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
+  "dependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2",
+    "@turbo/gen": "^1.9.7",
+    "eslint": "^8.41.0",
+    "eslint-config-next": "13.3.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-turbo": "^1.9.9",
+    "eslint-plugin-mdx": "^2.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^2.8.3",
-    "prettier-eslint": "^15.0.1",
-    "prop-types": "^15.8.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "storybook": "^6.5.16",
-    "typescript": "^4.9.5"
+    "eslint-plugin-tailwindcss": "^3.12.1",
+    "prettier": "^2.5.1",
+    "turbo": "latest"
   },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/arkemishub/table.git"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": [
-    "dist"
-  ]
+  "pnpm": {
+    "overrides": {
+      "@opentelemetry/api": "1.4.1",
+      "@opentelemetry/core": "1.13.0",
+      "@opentelemetry/exporter-trace-otlp-grpc": "0.39.1",
+      "@opentelemetry/resources": "1.13.0",
+      "@opentelemetry/sdk-trace-base": "1.13.0",
+      "@opentelemetry/sdk-trace-node": "1.13.0",
+      "@opentelemetry/semantic-conventions": "1.13.0"
+    }
+  }
 }

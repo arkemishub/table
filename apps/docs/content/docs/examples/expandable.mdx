@@ -1,0 +1,41 @@
+---
+title: Expandable
+---
+
+### Default
+
+In order to make rows expandable you need to set `expandable` property in `useTable` hook arguments.
+
+```tsx
+const { tableProps } = useTable({
+  expandable: true,
+  columns,
+});
+```
+
+In order to trigger row expansion you can use `handleExpandRow` within `render` function arguments:
+
+```tsx
+const columns = [
+  // ... other columns
+  {
+    id: "toggle",
+    label: "toggle",
+    render: (_, { handleExpandRow }) => (
+      <button onClick={handleExpandRow}>{`->`}</button>
+    ),
+  },
+];
+```
+
+By combining these two features you can create expandable rows as shown in the example below.
+
+<Preview id="expandable" />
+
+## Managing your own state
+
+Columns can be expanded even without using `useTable` hook.
+
+In that case you need to manage your own state and pass `onExpandRow` and `expandedRows` props to `Table` component.
+
+<Preview id="expandable-state" />

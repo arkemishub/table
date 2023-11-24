@@ -1,0 +1,37 @@
+{
+  "name": "@arkejs/table",
+  "version": "0.8.0",
+  "description": "Arke Table component",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "pnpm clean && tsup",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "arke",
+    "table"
+  ],
+  "author": "Arkemis S.r.l.",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "typescript": "^4.9.5",
+    "tsup": "^6.7.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arkemishub/table.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ]
+}

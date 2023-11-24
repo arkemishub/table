@@ -6,37 +6,47 @@ on:
     branches:
       - main
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
-  Release:
+  release:
     name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          persist-credentials: false
           fetch-depth: 0
+          persist-credentials: false
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.1
         with:
-         version: 8.7.6
-      - name: Setup Node.js
+          version: 8.7.6
+      - name: Setup Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: "lts/*"
+          node-version: 18
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Build package
-        run: pnpm build
-      - name: Setup semantic-release
-        run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
-      - name: Release
+        run: pnpm build --filter=@arkejs/table
+      #      - name: Test
+      #        run: pnpm test --filter=@arkejs/table
+      #      - name: Upload coverage reports to Codecov
+      #        uses: codecov/codecov-action@v3
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
+          version: npx changeset version
+          publish: npx changeset publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PA_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
-  Deploy-Docs:
-    name: Deploy Docs
-    uses: './.github/workflows/docs.yml'
-    secrets: inherit
+  docs:
+    name: Publish docs
     needs: Release
+    if: needs.release.outputs.published == 'true'
+    uses: './.github/workflows/docs.yml'
