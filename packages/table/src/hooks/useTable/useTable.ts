@@ -16,7 +16,7 @@
 
 import { useReducer, useState } from "react";
 import usePagination from "../usePagination";
-import type { Column, Filter, Sort } from "../../types";
+import type { TableColumn, TableFilter, TableSort } from "../../types";
 import type {
   IPaginationConfig,
   ISortConfig,
@@ -163,14 +163,14 @@ function useTable<
           c?.availableFilterOperators ??
           (c?.type && availableFilters?.[c.type]),
       })),
-      toggleHide: (columns: Column[]) =>
+      toggleHide: (columns: TableColumn[]) =>
         dispatch({ type: "toggleMultipleVisibleItems", payload: columns }),
       toggleHideAll: () =>
         dispatch({ type: "toggleAllVisibleItems", payload: columns }),
       columns: columns
         .filter((c) => visibleColumns.includes(c.id))
         .map((column) => ({ ...column, sortable: column?.sortable ?? true })),
-      setFilters: (filters: Filter[]) =>
+      setFilters: (filters: TableFilter[]) =>
         dispatch({ type: "setFilters", payload: filters }),
       resetAllFilters: () =>
         dispatch({ type: "resetAllFilters", payload: undefined }),
@@ -181,7 +181,7 @@ function useTable<
         ...data,
         sort,
         sortable: !!config?.sorting?.sortable,
-        setSort: (sort: Sort[]) => dispatch({ type: "setSort", payload: sort }),
+        setSort: (sort: TableSort[]) => dispatch({ type: "setSort", payload: sort }),
         sortType: sorting.type,
       };
     }

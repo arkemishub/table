@@ -15,23 +15,23 @@
  */
 
 import { CSSProperties, ReactNode } from "react";
-import { Action, Column, TableComponents } from "../../types";
+import { Action, TableColumn, TableComponents } from "../../types";
 import { IUseTableForwardedProps } from "../../hooks";
 
 type ITableProps = {
   /**
    * Table Columns
    */
-  columns: Omit<Column, "availableFilterOperators">[];
+  columns: Omit<TableColumn, "availableFilterOperators">[];
   data: Record<string, unknown>[];
   actions?: ActionsConfig;
   noResult?: ReactNode;
-  renderHeader?: (column: Column) => ReactNode;
+  renderHeader?: (column: TableColumn) => ReactNode;
   components?: TableComponents;
 } & Partial<IUseTableForwardedProps<any, any, any>>;
 
 interface ActionsConfig {
-  label: string;
+  label: string | ReactNode;
   position?: "start" | "end";
   className?: string;
   style?: CSSProperties;

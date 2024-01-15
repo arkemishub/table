@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-type Sort = {
+type TableSort = {
   type: "asc" | "desc";
-  columnId: string;
+  key: string;
 };
 
-export { Sort };
+export { TableSort };

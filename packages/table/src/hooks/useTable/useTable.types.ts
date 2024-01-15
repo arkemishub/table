@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { Column, ExpandedState, Filter, Sort } from "../../types";
+import { TableColumn, TableExpandedState, TableFilter, TableSort } from "../../types";
 
 type AllColumns = Array<
-  Column & {
+  TableColumn & {
     toggleHide: () => void;
     hidden: boolean;
   }
@@ -32,14 +32,14 @@ type IPaginationConfig = {
   type?: "custom";
 };
 
-type ISortConfig = { default?: Sort[]; sortable?: boolean; type?: "custom" };
+type ISortConfig = { default?: TableSort[]; sortable?: boolean; type?: "custom" };
 
-interface IUseTableConfig<Pagination, Sort, Expandable> {
+interface IUseTableConfig<Pagination, TableSort, Expandable> {
   pagination?: Pagination;
-  columns: Column[];
+  columns: TableColumn[];
   sorting?: ISortConfig;
   expandable?: Expandable;
-  initialFilters?: Filter[];
+  initialFilters?: TableFilter[];
 }
 
 interface IPaginationData {
@@ -56,50 +56,50 @@ interface IPaginationData {
 type IColumnsData = {
   allColumns: AllColumns;
   toggleHideAll: () => void;
-  toggleHide: (columns: Column[]) => void;
-  columns: Array<Omit<Column, "availableFilterOperators">>;
+  toggleHide: (columns: TableColumn[]) => void;
+  columns: Array<Omit<TableColumn, "availableFilterOperators">>;
   resetAllFilters: () => void;
-  setFilters: (filters: Filter[]) => void;
-  filters: Array<Filter>;
+  setFilters: (filters: TableFilter[]) => void;
+  filters: Array<TableFilter>;
 };
 
 type ISortData = {
-  sort: Sort[];
-  setSort: (sort: Sort[]) => void;
+  sort: TableSort[];
+  setSort: (sort: TableSort[]) => void;
   sortable: boolean;
   sortType?: "custom";
 };
 
 type IExpandableData = {
-  expandedRows: ExpandedState;
+  expandedRows: TableExpandedState;
 };
 
-type IUseTableResult<Pagination, Sort, Expandable> =
+type IUseTableResult<Pagination, TableSort, Expandable> =
   (Pagination extends undefined ? undefined : IPaginationData) &
-    (Sort extends undefined ? undefined : ISortData) &
+    (TableSort extends undefined ? undefined : ISortData) &
     (Expandable extends true ? IExpandableData : undefined) &
     IColumnsData;
 
-type IUseTableForwardedProps<Pagination, Sort, Expandable> = IUseTableResult<
+type IUseTableForwardedProps<Pagination, TableSort, Expandable> = IUseTableResult<
   Pagination,
-  Sort,
+  TableSort,
   Expandable
 > & {
   onExpandRow?: (index: number) => void;
 };
 
-type IUseTableData<Pagination, Sort, Expandable> = {
-  tableProps: IUseTableForwardedProps<Pagination, Sort, Expandable>;
-} & IUseTableResult<Pagination, Sort, Expandable>;
+type IUseTableData<Pagination, TableSort, Expandable> = {
+  tableProps: IUseTableForwardedProps<Pagination, TableSort, Expandable>;
+} & IUseTableResult<Pagination, TableSort, Expandable>;
 
 type TableState = {
   currentPage: number;
   pageSize: number;
   visibleColumns: string[];
-  filters: Filter[];
-  sort: Sort[];
-  expandedRows: ExpandedState;
-  initialFilters: Filter[];
+  filters: TableFilter[];
+  sort: TableSort[];
+  expandedRows: TableExpandedState;
+  initialFilters: TableFilter[];
 };
 
 type UseTableAction =
@@ -108,12 +108,12 @@ type UseTableAction =
       payload: number;
     }
   | { type: "toggleVisibleItem"; payload: string }
-  | { type: "toggleMultipleVisibleItems"; payload: Column[] }
-  | { type: "toggleAllVisibleItems"; payload: Column[] }
+  | { type: "toggleMultipleVisibleItems"; payload: TableColumn[] }
+  | { type: "toggleAllVisibleItems"; payload: TableColumn[] }
   | { type: "refresh"; payload: Partial<TableState> }
-  | { type: "setFilters"; payload: Filter[] }
+  | { type: "setFilters"; payload: TableFilter[] }
   | { type: "resetAllFilters"; payload: undefined }
-  | { type: "setSort"; payload: Sort[] }
+  | { type: "setSort"; payload: TableSort[] }
   | { type: "setExpandedRows"; payload: number };
 
 export {

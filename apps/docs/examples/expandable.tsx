@@ -1,9 +1,9 @@
-import { Column, Table, useTable } from "@arkejs/table";
+import { TableColumn, Table, useTable } from "@arkejs/table";
 import { default as mockColumns } from "@/examples/mocks/columns";
 import data from "@/examples/mocks/data";
 
 function Expandable() {
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     {
       id: "toggle",
       label: "toggle",

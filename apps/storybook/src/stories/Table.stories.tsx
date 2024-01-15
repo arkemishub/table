@@ -1,6 +1,6 @@
 import {
-  Column,
-  ExpandedState,
+  TableColumn,
+  TableExpandedState,
   ITableProps,
   Table,
   useTable,
@@ -166,7 +166,7 @@ export const WithCustomSorting = (args: Partial<ITableProps>) => {
 
   return (
     <>
-      <button onClick={() => setSort([{ columnId: "id", type: "asc" }])}>
+      <button onClick={() => setSort([{ key: "id", type: "asc" }])}>
         Sort by ID
       </button>
       <button onClick={() => setSort([])}>Reset</button>
@@ -218,9 +218,9 @@ export const WithMultipleColumnHiding = (args: Partial<ITableProps>) => {
   const { tableProps, allColumns, toggleHide } = useTable({
     columns: mockColumns,
   });
-  const [tempColumns, setTempColumns] = useState<Column[]>(allColumns);
+  const [tempColumns, setTempColumns] = useState<TableColumn[]>(allColumns);
 
-  const handleChange = (column: Column) => {
+  const handleChange = (column: TableColumn) => {
     setTempColumns((prevState) =>
       prevState.map((c) =>
         c.id === column.id ? { ...c, hidden: !c.hidden } : c
@@ -272,7 +272,7 @@ export const WithFilter = (args: Partial<ITableProps>) => {
                 // @ts-ignore
                 const value = e.target?.value?.value;
                 if (operator && value) {
-                  setFilters([...filters, { operator, value, columnId: c.id }]);
+                  setFilters([...filters, { operator, value, key: c.id }]);
                   // @ts-ignore
                   e.target.reset();
                 }
@@ -328,11 +328,11 @@ export const WithActions = (args: Partial<ITableProps>) => {
 };
 
 export const ExpandableState = (args: Partial<ITableProps>) => {
-  const [expandedRows, setExpandedRows] = useState<ExpandedState>({});
+  const [expandedRows, setExpandedRows] = useState<TableExpandedState>({});
   const data = mockData;
   const pageSize = 10;
 
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     {
       id: "toggle",
       label: "toggle",
@@ -385,7 +385,7 @@ export const ExpandableUseTable = (args: Partial<ITableProps>) => {
   const data = mockData;
   const pageSize = 10;
 
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     {
       id: "toggle",
       label: "toggle",

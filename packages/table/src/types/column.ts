@@ -17,7 +17,7 @@
 import { CSSProperties, ReactNode } from "react";
 import { FilterOperator } from "./filters";
 
-export type Column = {
+export type TableColumn = {
   id: string;
   label: string;
   renderHeader?: () => string | number | ReactNode;
