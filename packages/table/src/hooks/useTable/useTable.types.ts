@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { TableColumn, ExpandedState, TableFilter, TableSort } from "../../types";
+import { TableColumn, TableExpandedState, TableFilter, TableSort } from "../../types";
 
 type AllColumns = Array<
   TableColumn & {
@@ -71,7 +71,7 @@ type ISortData = {
 };
 
 type IExpandableData = {
-  expandedRows: ExpandedState;
+  expandedRows: TableExpandedState;
 };
 
 type IUseTableResult<Pagination, TableSort, Expandable> =
@@ -98,7 +98,7 @@ type TableState = {
   visibleColumns: string[];
   filters: TableFilter[];
   sort: TableSort[];
-  expandedRows: ExpandedState;
+  expandedRows: TableExpandedState;
   initialFilters: TableFilter[];
 };
 

@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-type ExpandedState = Record<number, boolean>;
+type TableExpandedState = Record<number, boolean>;
 
-export type { ExpandedState };
+export type { TableExpandedState };

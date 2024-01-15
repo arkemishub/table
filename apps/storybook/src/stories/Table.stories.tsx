@@ -1,6 +1,6 @@
 import {
   TableColumn,
-  ExpandedState,
+  TableExpandedState,
   ITableProps,
   Table,
   useTable,
@@ -328,7 +328,7 @@ export const WithActions = (args: Partial<ITableProps>) => {
 };
 
 export const ExpandableState = (args: Partial<ITableProps>) => {
-  const [expandedRows, setExpandedRows] = useState<ExpandedState>({});
+  const [expandedRows, setExpandedRows] = useState<TableExpandedState>({});
   const data = mockData;
   const pageSize = 10;
 
