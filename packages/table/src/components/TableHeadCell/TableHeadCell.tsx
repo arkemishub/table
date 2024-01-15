@@ -57,23 +57,23 @@ function TableHeadCell({
 
   const columnSort = useMemo(() => {
     if (isSortingEnabled) {
-      return sort?.find((s) => s.columnId === id);
+      return sort?.find((s) => s.key === id);
     }
     return undefined;
   }, [sort, isSortingEnabled, id]);
 
   const handleChangeSort = useCallback(() => {
     if (isSortingEnabled) {
-      const newSort = sort?.filter((s) => s.columnId !== id) ?? [];
+      const newSort = sort?.filter((s) => s.key !== id) ?? [];
 
       if (columnSort) {
         if (columnSort.type === "asc") {
-          setSort?.([...newSort, { columnId: id, type: "desc" }]);
+          setSort?.([...newSort, { key: id, type: "desc" }]);
         } else {
           setSort?.(newSort);
         }
       } else {
-        setSort?.([...newSort, { columnId: id, type: "asc" }]);
+        setSort?.([...newSort, { key: id, type: "asc" }]);
       }
     }
   }, [columnSort, id, setSort, sort, isSortingEnabled]);

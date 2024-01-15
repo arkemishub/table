@@ -22,7 +22,7 @@ function Filtering() {
                 // @ts-ignore
                 const value = e.target?.value?.value;
                 if (operator && value) {
-                  setFilters([...filters, { operator, value, columnId: c.id }]);
+                  setFilters([...filters, { operator, value, key: c.id }]);
                   // @ts-ignore
                   e.target.reset();
                 }

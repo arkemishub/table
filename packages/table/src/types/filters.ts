@@ -32,7 +32,7 @@ export enum FilterOperator {
 }
 
 export type TableFilter = {
-  columnId: string;
+  key: string;
   operator: FilterOperator;
   value: string | number;
 };

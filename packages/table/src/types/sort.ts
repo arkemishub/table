@@ -16,7 +16,7 @@
 
 type TableSort = {
   type: "asc" | "desc";
-  columnId: string;
+  key: string;
 };
 
 export { TableSort };

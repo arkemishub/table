@@ -166,7 +166,7 @@ export const WithCustomSorting = (args: Partial<ITableProps>) => {
 
   return (
     <>
-      <button onClick={() => setSort([{ columnId: "id", type: "asc" }])}>
+      <button onClick={() => setSort([{ key: "id", type: "asc" }])}>
         Sort by ID
       </button>
       <button onClick={() => setSort([])}>Reset</button>
@@ -272,7 +272,7 @@ export const WithFilter = (args: Partial<ITableProps>) => {
                 // @ts-ignore
                 const value = e.target?.value?.value;
                 if (operator && value) {
-                  setFilters([...filters, { operator, value, columnId: c.id }]);
+                  setFilters([...filters, { operator, value, key: c.id }]);
                   // @ts-ignore
                   e.target.reset();
                 }

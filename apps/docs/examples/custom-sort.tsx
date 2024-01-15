@@ -16,7 +16,7 @@ function CustomSort() {
       <div className="flex gap-4">
         <button
           className="btn btn--primary"
-          onClick={() => setSort([{ columnId: "id", type: "asc" }])}
+          onClick={() => setSort([{ key: "id", type: "asc" }])}
         >
           Sort by ID
         </button>
