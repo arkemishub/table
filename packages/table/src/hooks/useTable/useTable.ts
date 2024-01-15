@@ -16,7 +16,7 @@
 
 import { useReducer, useState } from "react";
 import usePagination from "../usePagination";
-import type { Column, Filter, TableSort } from "../../types";
+import type { TableColumn, Filter, TableSort } from "../../types";
 import type {
   IPaginationConfig,
   ISortConfig,
@@ -163,7 +163,7 @@ function useTable<
           c?.availableFilterOperators ??
           (c?.type && availableFilters?.[c.type]),
       })),
-      toggleHide: (columns: Column[]) =>
+      toggleHide: (columns: TableColumn[]) =>
         dispatch({ type: "toggleMultipleVisibleItems", payload: columns }),
       toggleHideAll: () =>
         dispatch({ type: "toggleAllVisibleItems", payload: columns }),

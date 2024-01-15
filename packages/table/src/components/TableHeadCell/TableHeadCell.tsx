@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Column } from "../../types";
+import { TableColumn } from "../../types";
 import { ISortData } from "../../hooks";
 import { useCallback, useMemo } from "react";
 
@@ -52,7 +52,7 @@ function TableHeadCell({
   setSort,
   sortType,
   renderHeader,
-}: Column & Partial<ISortData>) {
+}: TableColumn & Partial<ISortData>) {
   const isSortingEnabled = sortable && sortType !== "custom";
 
   const columnSort = useMemo(() => {

@@ -19,7 +19,7 @@ import { Pagination } from "../Pagination";
 import { Fragment, ReactNode, useCallback, useMemo } from "react";
 import pagination from "../Pagination/Pagination";
 import { useTableConfig } from "../TableConfigProvider/TableConfigProvider";
-import { Action, Column } from "../../types";
+import { Action, TableColumn } from "../../types";
 import { TableHeadCell } from "../TableHeadCell";
 
 const getPagedIndex = (index: number, currentPage: number, pageSize = 0) =>
@@ -52,7 +52,7 @@ function Table({
   );
 
   const renderData = useCallback(
-    (column: Column, row: Record<string, unknown>, index: number) => {
+    (column: TableColumn, row: Record<string, unknown>, index: number) => {
       if (column.render) {
         return column.render(row, {
           handleExpandRow: () =>

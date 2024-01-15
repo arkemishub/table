@@ -1,5 +1,5 @@
 import {
-  Column,
+  TableColumn,
   ExpandedState,
   ITableProps,
   Table,
@@ -218,9 +218,9 @@ export const WithMultipleColumnHiding = (args: Partial<ITableProps>) => {
   const { tableProps, allColumns, toggleHide } = useTable({
     columns: mockColumns,
   });
-  const [tempColumns, setTempColumns] = useState<Column[]>(allColumns);
+  const [tempColumns, setTempColumns] = useState<TableColumn[]>(allColumns);
 
-  const handleChange = (column: Column) => {
+  const handleChange = (column: TableColumn) => {
     setTempColumns((prevState) =>
       prevState.map((c) =>
         c.id === column.id ? { ...c, hidden: !c.hidden } : c
@@ -332,7 +332,7 @@ export const ExpandableState = (args: Partial<ITableProps>) => {
   const data = mockData;
   const pageSize = 10;
 
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     {
       id: "toggle",
       label: "toggle",
@@ -385,7 +385,7 @@ export const ExpandableUseTable = (args: Partial<ITableProps>) => {
   const data = mockData;
   const pageSize = 10;
 
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     {
       id: "toggle",
       label: "toggle",

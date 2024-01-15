@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Column, ExpandedState, Table } from "@arkejs/table";
+import { TableColumn, ExpandedState, Table } from "@arkejs/table";
 import { default as mockColumns } from "@/examples/mocks/columns";
 import data from "@/examples/mocks/data";
 
 function ExpandableState() {
   const [expandedRows, setExpandedRows] = useState<ExpandedState>({});
 
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     {
       id: "toggle",
       label: "toggle",

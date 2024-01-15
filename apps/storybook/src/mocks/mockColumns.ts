@@ -1,6 +1,6 @@
-import { Column } from "@arkejs/table";
+import { TableColumn } from "@arkejs/table";
 
-const mockColumns: Column[] = [
+const mockColumns: TableColumn[] = [
   { label: "ID", id: "id" },
   { label: "Name", id: "first_name", type: "string" },
   {
