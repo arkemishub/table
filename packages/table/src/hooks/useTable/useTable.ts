@@ -16,7 +16,7 @@
 
 import { useReducer, useState } from "react";
 import usePagination from "../usePagination";
-import type { Column, Filter, Sort } from "../../types";
+import type { Column, Filter, TableSort } from "../../types";
 import type {
   IPaginationConfig,
   ISortConfig,
@@ -181,7 +181,7 @@ function useTable<
         ...data,
         sort,
         sortable: !!config?.sorting?.sortable,
-        setSort: (sort: Sort[]) => dispatch({ type: "setSort", payload: sort }),
+        setSort: (sort: TableSort[]) => dispatch({ type: "setSort", payload: sort }),
         sortType: sorting.type,
       };
     }

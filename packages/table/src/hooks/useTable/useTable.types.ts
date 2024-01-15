@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Column, ExpandedState, Filter, Sort } from "../../types";
+import { Column, ExpandedState, Filter, TableSort } from "../../types";
 
 type AllColumns = Array<
   Column & {
@@ -32,9 +32,9 @@ type IPaginationConfig = {
   type?: "custom";
 };
 
-type ISortConfig = { default?: Sort[]; sortable?: boolean; type?: "custom" };
+type ISortConfig = { default?: TableSort[]; sortable?: boolean; type?: "custom" };
 
-interface IUseTableConfig<Pagination, Sort, Expandable> {
+interface IUseTableConfig<Pagination, TableSort, Expandable> {
   pagination?: Pagination;
   columns: Column[];
   sorting?: ISortConfig;
@@ -64,8 +64,8 @@ type IColumnsData = {
 };
 
 type ISortData = {
-  sort: Sort[];
-  setSort: (sort: Sort[]) => void;
+  sort: TableSort[];
+  setSort: (sort: TableSort[]) => void;
   sortable: boolean;
   sortType?: "custom";
 };
@@ -74,30 +74,30 @@ type IExpandableData = {
   expandedRows: ExpandedState;
 };
 
-type IUseTableResult<Pagination, Sort, Expandable> =
+type IUseTableResult<Pagination, TableSort, Expandable> =
   (Pagination extends undefined ? undefined : IPaginationData) &
-    (Sort extends undefined ? undefined : ISortData) &
+    (TableSort extends undefined ? undefined : ISortData) &
     (Expandable extends true ? IExpandableData : undefined) &
     IColumnsData;
 
-type IUseTableForwardedProps<Pagination, Sort, Expandable> = IUseTableResult<
+type IUseTableForwardedProps<Pagination, TableSort, Expandable> = IUseTableResult<
   Pagination,
-  Sort,
+  TableSort,
   Expandable
 > & {
   onExpandRow?: (index: number) => void;
 };
 
-type IUseTableData<Pagination, Sort, Expandable> = {
-  tableProps: IUseTableForwardedProps<Pagination, Sort, Expandable>;
-} & IUseTableResult<Pagination, Sort, Expandable>;
+type IUseTableData<Pagination, TableSort, Expandable> = {
+  tableProps: IUseTableForwardedProps<Pagination, TableSort, Expandable>;
+} & IUseTableResult<Pagination, TableSort, Expandable>;
 
 type TableState = {
   currentPage: number;
   pageSize: number;
   visibleColumns: string[];
   filters: Filter[];
-  sort: Sort[];
+  sort: TableSort[];
   expandedRows: ExpandedState;
   initialFilters: Filter[];
 };
@@ -113,7 +113,7 @@ type UseTableAction =
   | { type: "refresh"; payload: Partial<TableState> }
   | { type: "setFilters"; payload: Filter[] }
   | { type: "resetAllFilters"; payload: undefined }
-  | { type: "setSort"; payload: Sort[] }
+  | { type: "setSort"; payload: TableSort[] }
   | { type: "setExpandedRows"; payload: number };
 
 export {
