@@ -16,7 +16,7 @@
 
 import { useReducer, useState } from "react";
 import usePagination from "../usePagination";
-import type { TableColumn, Filter, TableSort } from "../../types";
+import type { TableColumn, TableFilter, TableSort } from "../../types";
 import type {
   IPaginationConfig,
   ISortConfig,
@@ -170,7 +170,7 @@ function useTable<
       columns: columns
         .filter((c) => visibleColumns.includes(c.id))
         .map((column) => ({ ...column, sortable: column?.sortable ?? true })),
-      setFilters: (filters: Filter[]) =>
+      setFilters: (filters: TableFilter[]) =>
         dispatch({ type: "setFilters", payload: filters }),
       resetAllFilters: () =>
         dispatch({ type: "resetAllFilters", payload: undefined }),

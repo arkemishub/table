@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { TableColumn, ExpandedState, Filter, TableSort } from "../../types";
+import { TableColumn, ExpandedState, TableFilter, TableSort } from "../../types";
 
 type AllColumns = Array<
   TableColumn & {
@@ -39,7 +39,7 @@ interface IUseTableConfig<Pagination, TableSort, Expandable> {
   columns: TableColumn[];
   sorting?: ISortConfig;
   expandable?: Expandable;
-  initialFilters?: Filter[];
+  initialFilters?: TableFilter[];
 }
 
 interface IPaginationData {
@@ -59,8 +59,8 @@ type IColumnsData = {
   toggleHide: (columns: TableColumn[]) => void;
   columns: Array<Omit<TableColumn, "availableFilterOperators">>;
   resetAllFilters: () => void;
-  setFilters: (filters: Filter[]) => void;
-  filters: Array<Filter>;
+  setFilters: (filters: TableFilter[]) => void;
+  filters: Array<TableFilter>;
 };
 
 type ISortData = {
@@ -96,10 +96,10 @@ type TableState = {
   currentPage: number;
   pageSize: number;
   visibleColumns: string[];
-  filters: Filter[];
+  filters: TableFilter[];
   sort: TableSort[];
   expandedRows: ExpandedState;
-  initialFilters: Filter[];
+  initialFilters: TableFilter[];
 };
 
 type UseTableAction =
@@ -111,7 +111,7 @@ type UseTableAction =
   | { type: "toggleMultipleVisibleItems"; payload: TableColumn[] }
   | { type: "toggleAllVisibleItems"; payload: TableColumn[] }
   | { type: "refresh"; payload: Partial<TableState> }
-  | { type: "setFilters"; payload: Filter[] }
+  | { type: "setFilters"; payload: TableFilter[] }
   | { type: "resetAllFilters"; payload: undefined }
   | { type: "setSort"; payload: TableSort[] }
   | { type: "setExpandedRows"; payload: number };

@@ -31,7 +31,7 @@ export enum FilterOperator {
   BETWEEN = "between",
 }
 
-export type Filter = {
+export type TableFilter = {
   columnId: string;
   operator: FilterOperator;
   value: string | number;
