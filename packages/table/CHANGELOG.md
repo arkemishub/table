@@ -1,5 +1,11 @@
 # @arkejs/table
 
+## 0.11.0
+
+### Minor Changes
+
+- b2bc5f2: table types export and improvements
+
 ## 0.9.0
 
 ### Minor Changes
