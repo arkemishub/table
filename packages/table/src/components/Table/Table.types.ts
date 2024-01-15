@@ -31,7 +31,7 @@ type ITableProps = {
 } & Partial<IUseTableForwardedProps<any, any, any>>;
 
 interface ActionsConfig {
-  label: string;
+  label: string | ReactNode;
   position?: "start" | "end";
   className?: string;
   style?: CSSProperties;
