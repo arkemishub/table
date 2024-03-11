@@ -15,8 +15,10 @@
  */
 
 import { CSSProperties, ReactNode } from "react";
-import { Action, TableColumn, TableComponents } from "../../types";
-import { IUseTableForwardedProps } from "../../hooks";
+import { TableColumn } from "./column";
+import { TableComponents } from "./components";
+import { IUseTableForwardedProps } from "../hooks";
+import { Action } from "./action";
 
 type ITableProps = {
   /**
@@ -30,12 +32,12 @@ type ITableProps = {
   components?: TableComponents;
 } & Partial<IUseTableForwardedProps<any, any, any>>;
 
-interface ActionsConfig {
+type ActionsConfig = {
   label: string | ReactNode;
   position?: "start" | "end";
   className?: string;
   style?: CSSProperties;
   actions: Array<Action>;
-}
+};
 
 export { ITableProps };

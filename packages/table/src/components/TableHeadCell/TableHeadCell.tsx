@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { TableColumn } from "../../types";
+import { TableColumn, TableComponents } from "../../types";
 import { ISortData } from "../../hooks";
 import { useCallback, useMemo } from "react";
 
@@ -52,7 +52,8 @@ function TableHeadCell({
   setSort,
   sortType,
   renderHeader,
-}: TableColumn & Partial<ISortData>) {
+  components,
+}: TableColumn & Partial<ISortData> & { components?: TableComponents }) {
   const isSortingEnabled = sortable && sortType !== "custom";
 
   const columnSort = useMemo(() => {
@@ -78,8 +79,10 @@ function TableHeadCell({
     }
   }, [columnSort, id, setSort, sort, isSortingEnabled]);
 
+  const Th = components?.TableHead ?? "th";
+
   return (
-    <th
+    <Th
       scope="col"
       className={className}
       style={{
@@ -94,7 +97,7 @@ function TableHeadCell({
     >
       {renderHeader?.() ?? label}
       {columnSort && <Icon type={columnSort.type} />}
-    </th>
+    </Th>
   );
 }
 

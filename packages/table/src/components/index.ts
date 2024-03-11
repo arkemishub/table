@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export * from "./Table";
 export * from "./Pagination";
 export * from "./TableConfigProvider";
+export * from "./table";

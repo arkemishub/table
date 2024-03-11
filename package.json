@@ -2,12 +2,14 @@
   "name": "table",
   "packageManager": "pnpm@8.7.6",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "release": "changeset publish"
+    "pub:beta": "cd packages/table && pnpm pub:beta",
+    "pub:release": "cd packages/table && pnpm pub:release"
   },
   "dependencies": {
     "@changesets/changelog-github": "^0.4.8",

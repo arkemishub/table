@@ -20,3 +20,4 @@ export * from "./components";
 export * from "./expandable";
 export * from "./filters";
 export * from "./sort";
+export * from "./table";
