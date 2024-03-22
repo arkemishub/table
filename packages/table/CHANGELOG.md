@@ -1,5 +1,11 @@
 # @arkejs/table
 
+## 0.11.1
+
+### Patch Changes
+
+- 2ad628f: feat: extend components prop
+
 ## 0.11.0
 
 ### Minor Changes
