@@ -1,6 +1,6 @@
 # @arkejs/table
 
-![Table](https://user-images.githubusercontent.com/81776297/233088195-b7781154-e5da-4a6c-bc27-25ae73d6f49c.png)
+![Table](https://github.com/arkemishub/table/assets/81776297/36560ef9-a4b0-4e4c-83dd-971eaa433efb)
 
 [![License](https://img.shields.io/badge/license-Apache2.0-blue.svg)](https://github.com/arkemishub/arke-monorepo/blob/master/LICENSE.txt)
 
