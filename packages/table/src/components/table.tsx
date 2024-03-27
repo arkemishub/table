@@ -222,7 +222,7 @@ const TableAction = ({
   data,
 }: Action & { data: Record<string, unknown> }) => {
   return (
-    <button onClick={() => onClick?.(data)}>
+    <button type="button" onClick={() => onClick?.(data)}>
       {typeof content === "function" ? content(data) : content}
     </button>
   );
