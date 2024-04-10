@@ -1,19 +1,67 @@
-/**
- * Copyright 2023 Arkemis S.r.l.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+import * as React from "react";
+import { Table, TableOptions, TableResolvedOptions } from "./types/table";
+import { pagination } from "./features/pagination";
+import { functionalUpdate } from "./utils/functional-update";
 
-export * from "./components";
-export * from "./hooks";
-export * from "./types";
+const features = [pagination];
+
+function initTable(options: TableOptions): Table {
+  let initialState = options?.initialState ?? {};
+  features.forEach((feature) => {
+    initialState = feature.getInitialState?.(initialState) ?? initialState;
+  });
+
+  let table = {} as Table;
+
+  const defaultOptions = features.reduce(
+    (obj, feature) => Object.assign(obj, feature.getDefaultOptions?.(table)),
+    {} as TableResolvedOptions
+  );
+
+  let instance = {
+    options: {
+      ...defaultOptions,
+      ...options,
+    },
+    initialState,
+    setOptions: (updater) => {
+      table.options = functionalUpdate(updater, table.options);
+    },
+    getState: () => table.options.state,
+    setState: (updater) => {
+      table.options.onStateChange?.(updater);
+    },
+  } as Table;
+
+  Object.assign(table, instance);
+
+  features.forEach((feature) => feature.init(table));
+
+  return table;
+}
+
+export function useTable(options: TableOptions) {
+  const [table] = React.useState(() =>
+    initTable({
+      state: {},
+      onStateChange: () => {},
+      ...options,
+    })
+  );
+  const [state, setState] = React.useState(() => table.initialState);
+
+  table.setOptions((prev) => ({
+    ...prev,
+    ...options,
+    state: {
+      ...state,
+      ...options.state,
+    },
+    onStateChange: (state) => {
+      setState(state);
+      options.onStateChange?.(state);
+    },
+  }));
+
+  return table;
+}
