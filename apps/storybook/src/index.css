@@ -11,6 +11,6 @@
     --secondary: 0, 0%, 0%;
     --secondary-foreground: 0, 0%, 100%;
     --neutral: 220, 25%, 91%;
-    --neutral-foreground: 0, 0%, 100%;
+    --neutral-foreground: 0, 0%, 0%;
   }
 }
