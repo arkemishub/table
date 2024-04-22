@@ -67,6 +67,22 @@ const invoices = [
     paymentMethod: "Credit Card",
   },
 ];
+
+const columns = [
+  {
+    id: "invoice",
+  },
+  {
+    id: "paymentStatus",
+  },
+  {
+    id: "paymentMethod",
+  },
+  {
+    id: "totalAmount",
+  },
+];
+
 export const Default = () => {
   const table = useTable({});
   console.log(table);
@@ -178,6 +194,61 @@ export const WithPagination = () => {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
+    </>
+  );
+};
+
+export const ColumnVisibility = () => {
+  const table = useTable({ columns });
+
+  return (
+    <>
+      <div>
+        {table.getAllColumns().map((column) => (
+          <label key={column.id}>
+            <input
+              type="checkbox"
+              checked={column.isVisible()}
+              onChange={() => column.toggleVisibility()}
+            />
+            {column.id}
+          </label>
+        ))}
+      </div>
+      <Table>
+        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            {/*todo: work on header model*/}
+            {table.getAllColumns().map((column) => {
+              return column.isVisible() ? (
+                <TableHead key={column.id}>{column.id}</TableHead>
+              ) : null;
+            })}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {invoices.map((invoice) => (
+            <TableRow key={invoice.invoice}>
+              {table.getAllColumns().map((column) => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore / todo: work on row model
+                const value = invoice?.[column.id];
+                const isVisible = column.isVisible();
+                return isVisible ? (
+                  <TableCell key={column.id}>{value}</TableCell>
+                ) : null;
+              })}
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell className="text-right">$2,500.00</TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
     </>
   );
 };
