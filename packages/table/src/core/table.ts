@@ -4,8 +4,9 @@ import { pagination } from "../features/pagination";
 import { initColumn } from "./column";
 import { columnVisibility } from "../features/column-visibility";
 import { initRow } from "./row";
+import { columnFiltering } from "../features/column-filtering";
 
-const features = [pagination, columnVisibility];
+const features = [pagination, columnVisibility, columnFiltering];
 export function initTable<TData extends any>(
   options: TableOptions<TData>
 ): Table<TData> {

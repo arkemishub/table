@@ -14,8 +14,16 @@ import {
 import { TableFeature } from "./feature";
 import { BaseRow } from "../core/row";
 import { BaseCell } from "../core/cell";
+import {
+  ColumnFilteringColumn,
+  ColumnFilteringInstance,
+  ColumnFilteringOptions,
+  ColumnFilteringTableState,
+} from "../features/column-filtering";
 
-export type TableState = PaginationTableState & ColumnVisibilityTableState;
+export type TableState = PaginationTableState &
+  ColumnVisibilityTableState &
+  ColumnFilteringTableState;
 
 export type TableBaseOptions<TData extends any> = {
   columns: ColumnDef[];
@@ -27,7 +35,8 @@ export type TableBaseOptions<TData extends any> = {
 
 export type TableResolvedOptions<TData extends any> = TableBaseOptions<TData> &
   PaginationOptions &
-  ColumnVisibilityOptions;
+  ColumnVisibilityOptions &
+  ColumnFilteringOptions;
 
 export type TableOptions<TData extends any> = Partial<
   TableResolvedOptions<TData>
@@ -46,7 +55,8 @@ export type TableBaseInstance<TData extends any> = {
 
 export type Table<TData extends any> = TableBaseInstance<TData> &
   PaginationInstance &
-  ColumnVisibilityInstance<TData>;
+  ColumnVisibilityInstance<TData> &
+  ColumnFilteringInstance<TData>;
 
 export type ColumnDef = {
   id: string;
@@ -57,4 +67,6 @@ export type Row<TData extends any> = BaseRow<TData> &
 
 export type Cell<TData extends any> = BaseCell<TData>;
 
-export type Column<TData extends any> = ColumnDef & ColumnVisibilityColumn;
+export type Column<TData extends any> = ColumnDef &
+  ColumnVisibilityColumn &
+  ColumnFilteringColumn;
