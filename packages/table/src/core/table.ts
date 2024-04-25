@@ -3,19 +3,22 @@ import { functionalUpdate } from "../utils/functional-update";
 import { pagination } from "../features/pagination";
 import { initColumn } from "./column";
 import { columnVisibility } from "../features/column-visibility";
+import { initRow } from "./row";
 
 const features = [pagination, columnVisibility];
-export function initTable(options: TableOptions): Table {
+export function initTable<TData extends any>(
+  options: TableOptions<TData>
+): Table<TData> {
   let initialState = options?.initialState ?? {};
   features.forEach((feature) => {
     initialState = feature.getInitialState?.(initialState) ?? initialState;
   });
 
-  let table = { features } as Table;
+  let table = { features } as Table<TData>;
 
   const defaultOptions = features.reduce(
     (obj, feature) => Object.assign(obj, feature.getDefaultOptions?.(table)),
-    {} as TableResolvedOptions
+    {} as TableResolvedOptions<TData>
   );
 
   let instance = {
@@ -33,7 +36,11 @@ export function initTable(options: TableOptions): Table {
     },
     getAllColumns: () =>
       table.options.columns?.map((column) => initColumn(table, column)) ?? [],
-  } as Table;
+    getRows: () =>
+      table.options.data?.map((data, index) =>
+        initRow(table, index.toString(), data)
+      ),
+  } as Table<TData>;
 
   Object.assign(table, instance);
 

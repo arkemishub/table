@@ -2,7 +2,7 @@ import * as React from "react";
 import { TableOptions } from "./types/table";
 import { initTable } from "./core/table";
 
-export function useTable(options: TableOptions) {
+export function useTable<TData extends any>(options: TableOptions<TData>) {
   const [table] = React.useState(() =>
     initTable({
       state: {},

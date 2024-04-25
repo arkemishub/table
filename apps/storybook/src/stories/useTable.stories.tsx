@@ -84,27 +84,24 @@ const columns = [
 ];
 
 export const Default = () => {
-  const table = useTable({});
-  console.log(table);
+  const table = useTable({ columns, data: invoices });
 
   return (
     <Table>
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          {table.getAllColumns().map((column) => (
+            <TableHead key={column.id}>{column.id}</TableHead>
+          ))}
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
-            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-            <TableCell>{invoice.paymentStatus}</TableCell>
-            <TableCell>{invoice.paymentMethod}</TableCell>
-            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+        {table.getRows().map((row) => (
+          <TableRow key={row.id}>
+            {row.getAllCells().map((cell) => (
+              <TableCell className="font-medium">{cell.getValue()}</TableCell>
+            ))}
           </TableRow>
         ))}
       </TableBody>
@@ -119,13 +116,10 @@ export const Default = () => {
 };
 
 export const WithPagination = () => {
-  const table = useTable({});
+  const table = useTable({ columns, data: invoices });
   const {
     pagination: { pageIndex },
   } = table.getState();
-
-  console.log(table);
-  console.log(pageIndex);
 
   return (
     <>
@@ -199,7 +193,7 @@ export const WithPagination = () => {
 };
 
 export const ColumnVisibility = () => {
-  const table = useTable({ columns });
+  const table = useTable({ columns, data: invoices });
 
   return (
     <>
@@ -219,26 +213,17 @@ export const ColumnVisibility = () => {
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            {/*todo: work on header model*/}
-            {table.getAllColumns().map((column) => {
-              return column.isVisible() ? (
-                <TableHead key={column.id}>{column.id}</TableHead>
-              ) : null;
-            })}
+            {table.getAllVisibleColumns().map((column) => (
+              <TableHead key={column.id}>{column.id}</TableHead>
+            ))}
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              {table.getAllColumns().map((column) => {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore / todo: work on row model
-                const value = invoice?.[column.id];
-                const isVisible = column.isVisible();
-                return isVisible ? (
-                  <TableCell key={column.id}>{value}</TableCell>
-                ) : null;
-              })}
+          {table.getRows().map((row) => (
+            <TableRow key={row.id}>
+              {row.getAllVisibleCells().map((cell) => (
+                <TableCell key={cell.id}>{cell.getValue()}</TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>

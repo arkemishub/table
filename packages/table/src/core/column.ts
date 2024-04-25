@@ -1,8 +1,8 @@
 import { ColumnDef, Column, Table } from "../types/table";
 
 export function initColumn<TData extends any>(
-  table: Table,
-  columnDef: Column<TData>
+  table: Table<TData>,
+  columnDef: ColumnDef
 ) {
   let column: ColumnDef = {
     id: columnDef.id,
