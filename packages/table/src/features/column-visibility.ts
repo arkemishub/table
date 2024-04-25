@@ -1,4 +1,5 @@
 import { TableFeature } from "../types/feature";
+import { Cell, Column } from "../types/table";
 
 export type ColumnVisibilityState = Record<string, boolean>;
 
@@ -10,13 +11,18 @@ export type ColumnVisibilityOptions = {
   onColumnVisibilityChange: (columnVisibility: ColumnVisibilityState) => void;
 };
 
-export type ColumnVisibilityInstance = {
+export type ColumnVisibilityInstance<TData extends any> = {
   setColumnVisibility: (columnVisibility: ColumnVisibilityState) => void;
+  getAllVisibleColumns: () => Column<TData>[];
 };
 
 export type ColumnVisibilityColumn = {
   isVisible: () => boolean;
   toggleVisibility: (value?: boolean) => void;
+};
+
+export type ColumnVisibilityRow<TData extends any> = {
+  getAllVisibleCells: () => Cell<TData>[];
 };
 
 export const columnVisibility: TableFeature = {
@@ -31,6 +37,8 @@ export const columnVisibility: TableFeature = {
   init: (table) => {
     table.setColumnVisibility = (columnVisibility) =>
       table.options.onColumnVisibilityChange?.(columnVisibility);
+    table.getAllVisibleColumns = () =>
+      table.getAllColumns().filter((column) => column.isVisible());
   },
   initColumn: (table, column) => {
     column.isVisible = () =>
@@ -40,5 +48,9 @@ export const columnVisibility: TableFeature = {
         ...table.getState().columnVisibility,
         [column.id]: value ?? !column.isVisible(),
       });
+  },
+  initRow: (table, row) => {
+    row.getAllVisibleCells = () =>
+      row.getAllCells().filter((cell) => cell.column.isVisible());
   },
 };
