@@ -26,6 +26,7 @@ export function useTable<TData extends any>(options: TableOptions<TData>) {
       ...options,
     })
   );
+
   const [state, setState] = React.useState(() => table.initialState);
 
   table.setOptions((prev) => ({

@@ -47,8 +47,8 @@ export const columnVisibility: TableFeature = {
       table.setState((prev) => ({ ...prev, columnVisibility })),
   }),
   getInitialState: (state) => ({
-    ...state,
     columnVisibility: {},
+    ...state,
   }),
   init: (table) => {
     table.setColumnVisibility = (columnVisibility) =>
