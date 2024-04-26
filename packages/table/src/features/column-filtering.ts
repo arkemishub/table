@@ -41,8 +41,8 @@ export const columnFiltering: TableFeature = {
       table.setState((prev) => ({ ...prev, columnFilters })),
   }),
   getInitialState: (state) => ({
-    ...state,
     columnFilters: {},
+    ...state,
   }),
   init: (table) => {
     table.setColumnFilters = (columnFilters) =>

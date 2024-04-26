@@ -36,23 +36,31 @@ import {
   ColumnFilteringOptions,
   ColumnFilteringTableState,
 } from "../features/column-filtering";
+import {
+  SortingColumn,
+  SortingInstance,
+  SortingOptions,
+  SortTableState,
+} from "../features/sorting";
 
 export type TableState = PaginationTableState &
   ColumnVisibilityTableState &
-  ColumnFilteringTableState;
+  ColumnFilteringTableState &
+  SortTableState;
 
 export type TableBaseOptions<TData extends any> = {
   columns: ColumnDef[];
   state: Partial<TableState>;
   onStateChange: React.Dispatch<React.SetStateAction<TableState>>;
-  initialState?: TableState;
+  initialState?: Partial<TableState>;
   data: TData[];
 };
 
 export type TableResolvedOptions<TData extends any> = TableBaseOptions<TData> &
   PaginationOptions &
   ColumnVisibilityOptions &
-  ColumnFilteringOptions;
+  ColumnFilteringOptions &
+  SortingOptions;
 
 export type TableOptions<TData extends any> = Partial<
   TableResolvedOptions<TData>
@@ -72,7 +80,8 @@ export type TableBaseInstance<TData extends any> = {
 export type Table<TData extends any> = TableBaseInstance<TData> &
   PaginationInstance &
   ColumnVisibilityInstance<TData> &
-  ColumnFilteringInstance<TData>;
+  ColumnFilteringInstance<TData> &
+  SortingInstance<TData>;
 
 export type ColumnDef = {
   id: string;
@@ -85,4 +94,5 @@ export type Cell<TData extends any> = BaseCell<TData>;
 
 export type Column<TData extends any> = ColumnDef &
   ColumnVisibilityColumn &
-  ColumnFilteringColumn;
+  ColumnFilteringColumn &
+  SortingColumn;

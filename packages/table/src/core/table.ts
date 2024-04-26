@@ -21,8 +21,9 @@ import { initColumn } from "./column";
 import { columnVisibility } from "../features/column-visibility";
 import { initRow } from "./row";
 import { columnFiltering } from "../features/column-filtering";
+import { sorting } from "../features/sorting";
 
-const features = [pagination, columnVisibility, columnFiltering];
+const features = [pagination, columnVisibility, columnFiltering, sorting];
 export function initTable<TData extends any>(
   options: TableOptions<TData>
 ): Table<TData> {
