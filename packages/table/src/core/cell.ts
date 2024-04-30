@@ -14,24 +14,31 @@
  * limitations under the License.
  */
 
-import { Column, Row, Table, Cell } from "../types/table";
+import { Column, Row, Types, Cell } from "../types";
 
 export type BaseCell<TData extends any> = {
   column: Column<TData>;
   getValue: () => any;
+  renderValue: () => any;
   id: string;
   row: Row<TData>;
 };
 export function initCell<TData extends any>(
-  table: Table<TData>,
+  table: Types<TData>,
   column: Column<TData>,
   row: Row<TData>
 ) {
+  const getValue = () => (row.data as any)[column.id];
+
   let cell: Cell<TData> = {
     id: `${row.id}_${column.id}`,
     row,
     column,
-    getValue: () => (row.data as any)[column.id],
+    getValue,
+    renderValue: () =>
+      column?.cell?.renderValue
+        ? column.cell.renderValue(row.data)
+        : getValue(),
   };
 
   for (const feature of table.features) {

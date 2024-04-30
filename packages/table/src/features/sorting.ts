@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { TableFeature } from "../types/feature";
+import { TableFeature } from "../types";
 
 export type Sort = "asc" | "desc" | undefined;
 export type SortingState = Record<string, Sort>;

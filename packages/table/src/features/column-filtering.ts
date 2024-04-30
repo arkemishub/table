@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { TableFeature } from "../types/feature";
+import { TableFeature } from "../types";
 
 export type ColumnFilteringState = Record<string, unknown>;
 
