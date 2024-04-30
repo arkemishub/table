@@ -19,29 +19,28 @@ import {
   PaginationInstance,
   PaginationOptions,
   PaginationTableState,
-} from "../features/pagination";
+} from "./features/pagination";
 import {
   ColumnVisibilityColumn,
   ColumnVisibilityInstance,
   ColumnVisibilityOptions,
   ColumnVisibilityRow,
   ColumnVisibilityTableState,
-} from "../features/column-visibility";
-import { TableFeature } from "./feature";
-import { BaseRow } from "../core/row";
-import { BaseCell } from "../core/cell";
+} from "./features/column-visibility";
+import { BaseRow } from "./core/row";
+import { BaseCell } from "./core/cell";
 import {
   ColumnFilteringColumn,
   ColumnFilteringInstance,
   ColumnFilteringOptions,
   ColumnFilteringTableState,
-} from "../features/column-filtering";
+} from "./features/column-filtering";
 import {
   SortingColumn,
   SortingInstance,
   SortingOptions,
   SortTableState,
-} from "../features/sorting";
+} from "./features/sorting";
 
 export type TableState = PaginationTableState &
   ColumnVisibilityTableState &
@@ -49,7 +48,7 @@ export type TableState = PaginationTableState &
   SortTableState;
 
 export type TableBaseOptions<TData extends any> = {
-  columns: ColumnDef[];
+  columns: ColumnDef<TData>[];
   state: Partial<TableState>;
   onStateChange: React.Dispatch<React.SetStateAction<TableState>>;
   initialState?: Partial<TableState>;
@@ -77,14 +76,18 @@ export type TableBaseInstance<TData extends any> = {
   getRows: () => Row<TData>[];
 };
 
-export type Table<TData extends any> = TableBaseInstance<TData> &
+export type Types<TData extends any> = TableBaseInstance<TData> &
   PaginationInstance &
   ColumnVisibilityInstance<TData> &
   ColumnFilteringInstance<TData> &
   SortingInstance<TData>;
 
-export type ColumnDef = {
+export type ColumnDef<TData extends any> = {
   id: string;
+  header?: string;
+  cell?: {
+    renderValue?: (value: TData) => React.ReactNode;
+  };
 };
 
 export type Row<TData extends any> = BaseRow<TData> &
@@ -92,7 +95,23 @@ export type Row<TData extends any> = BaseRow<TData> &
 
 export type Cell<TData extends any> = BaseCell<TData>;
 
-export type Column<TData extends any> = ColumnDef &
+export type Column<TData extends any> = ColumnDef<TData> &
   ColumnVisibilityColumn &
   ColumnFilteringColumn &
   SortingColumn;
+
+export type TableFeature<TData extends any = any> = {
+  getInitialState?: (state?: Partial<TableState>) => Partial<TableState>;
+  init: (table: Types<TData>) => void;
+  getDefaultOptions?: (
+    table: Types<TData>
+  ) => Partial<TableResolvedOptions<TData>>;
+  initColumn?: (table: Types<TData>, column: Column<any>) => void;
+  initRow?: (table: Types<TData>, row: Row<TData>) => void;
+  initCell?: (
+    table: Types<TData>,
+    cell: Cell<TData>,
+    column: Column<TData>,
+    row: Row<TData>
+  ) => void;
+};

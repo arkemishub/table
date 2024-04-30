@@ -16,7 +16,7 @@
 
 // pagination is currently manual only
 
-import { TableFeature } from "../types/feature";
+import { TableFeature } from "../types";
 
 const DEFAULT_PAGE_SIZE = 10;
 const DEFAULT_PAGE_INDEX = 0;

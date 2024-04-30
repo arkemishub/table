@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import { TableFeature } from "../types/feature";
-import { Cell, Column } from "../types/table";
+import { Cell, Column, TableFeature } from "../types";
 
 export type ColumnVisibilityState = Record<string, boolean>;
 

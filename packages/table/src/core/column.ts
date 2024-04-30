@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-import { ColumnDef, Column, Table } from "../types/table";
+import { ColumnDef, Column, Types } from "../types";
 
 export function initColumn<TData extends any>(
-  table: Table<TData>,
-  columnDef: ColumnDef
+  table: Types<TData>,
+  columnDef: ColumnDef<TData>
 ) {
-  let column: ColumnDef = {
+  let column: ColumnDef<TData> = {
     id: columnDef.id,
+    header: columnDef.header ?? columnDef.id,
+    cell: columnDef.cell,
   };
 
   for (const feature of table.features) {
-    feature.initColumn?.(table, column as Column<any>);
+    feature.initColumn?.(table, column as Column<TData>);
   }
 
   return column;

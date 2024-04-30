@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Table, TableOptions, TableResolvedOptions } from "../types/table";
+import { Types, TableOptions, TableResolvedOptions } from "../types";
 import { functionalUpdate } from "../utils/functional-update";
 import { pagination } from "../features/pagination";
 import { initColumn } from "./column";
@@ -26,13 +26,13 @@ import { sorting } from "../features/sorting";
 const features = [pagination, columnVisibility, columnFiltering, sorting];
 export function initTable<TData extends any>(
   options: TableOptions<TData>
-): Table<TData> {
+): Types<TData> {
   let initialState = options?.initialState ?? {};
   features.forEach((feature) => {
     initialState = feature.getInitialState?.(initialState) ?? initialState;
   });
 
-  let table = { features } as Table<TData>;
+  let table = { features } as Types<TData>;
 
   const defaultOptions = features.reduce(
     (obj, feature) => Object.assign(obj, feature.getDefaultOptions?.(table)),
@@ -58,7 +58,7 @@ export function initTable<TData extends any>(
       table.options.data?.map((data, index) =>
         initRow(table, index.toString(), data)
       ),
-  } as Table<TData>;
+  } as Types<TData>;
 
   Object.assign(table, instance);
 

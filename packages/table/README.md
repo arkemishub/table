@@ -1,6 +1,6 @@
 # @arkejs/table
 
-![Table](https://user-images.githubusercontent.com/81776297/233088195-b7781154-e5da-4a6c-bc27-25ae73d6f49c.png)
+![Types](https://user-images.githubusercontent.com/81776297/233088195-b7781154-e5da-4a6c-bc27-25ae73d6f49c.png)
 
 [![License](https://img.shields.io/badge/license-Apache2.0-blue.svg)](https://github.com/arkemishub/arke-monorepo/blob/master/LICENSE.txt)
 
@@ -30,7 +30,7 @@ npm i @arkejs/table
 The basic implementation allows you to display data without having any sort of control over pagination, filtering and more.
 
 ```jsx
-<Table data={data} columns={columns} />
+<Types data={data} columns={columns} />
 ```
 
 ---
@@ -51,11 +51,11 @@ function MyTable() {
         },
     });
 
-    return <Table {...tableProps} data={data}/>
+    return <Types {...tableProps} data={data}/>
 }
 ```
 
-As you can see by using `useTable` we don't need to define props for the `Table` component since they are returned in `tableProps`.
+As you can see by using `useTable` we don't need to define props for the `Types` component since they are returned in `tableProps`.
 In addition, the hook provides us some ways to manage the table externally.
 
 Let's now implement a simple pagination, fully controlled by outside.
@@ -71,7 +71,7 @@ function MyTable() {
 
     return (
         <>
-            <Table {...tableProps} data={data}/>
+            <Types {...tableProps} data={data}/>
             <button
                 disabled={currentPage == 0}
                 onClick={() => {
@@ -93,4 +93,4 @@ function MyTable() {
 }
 ```
 
-By using `useTable` exported function we ended up with a `Table` which pagination is managed in the way that we like.
+By using `useTable` exported function we ended up with a `Types` which pagination is managed in the way that we like.
