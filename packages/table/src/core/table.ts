@@ -22,8 +22,15 @@ import { columnVisibility } from "../features/column-visibility";
 import { initRow } from "./row";
 import { columnFiltering } from "../features/column-filtering";
 import { sorting } from "../features/sorting";
+import { rowSelection } from "../features/row-selection";
 
-const features = [pagination, columnVisibility, columnFiltering, sorting];
+const features = [
+  pagination,
+  columnVisibility,
+  columnFiltering,
+  sorting,
+  rowSelection,
+];
 export function initTable<TData extends any>(
   options: TableOptions<TData>
 ): Types<TData> {

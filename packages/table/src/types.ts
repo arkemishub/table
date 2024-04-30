@@ -41,11 +41,18 @@ import {
   SortingOptions,
   SortTableState,
 } from "./features/sorting";
+import {
+  RowSelectionInstance,
+  RowSelectionOptions,
+  RowSelectionRow,
+  RowSelectionTableState,
+} from "./features/row-selection";
 
 export type TableState = PaginationTableState &
   ColumnVisibilityTableState &
   ColumnFilteringTableState &
-  SortTableState;
+  SortTableState &
+  RowSelectionTableState;
 
 export type TableBaseOptions<TData extends any> = {
   columns: ColumnDef<TData>[];
@@ -59,7 +66,8 @@ export type TableResolvedOptions<TData extends any> = TableBaseOptions<TData> &
   PaginationOptions &
   ColumnVisibilityOptions &
   ColumnFilteringOptions &
-  SortingOptions;
+  SortingOptions &
+  RowSelectionOptions;
 
 export type TableOptions<TData extends any> = Partial<
   TableResolvedOptions<TData>
@@ -80,7 +88,8 @@ export type Types<TData extends any> = TableBaseInstance<TData> &
   PaginationInstance &
   ColumnVisibilityInstance<TData> &
   ColumnFilteringInstance<TData> &
-  SortingInstance<TData>;
+  SortingInstance<TData> &
+  RowSelectionInstance<TData>;
 
 export type ColumnDef<TData extends any> = {
   id: string;
@@ -91,7 +100,8 @@ export type ColumnDef<TData extends any> = {
 };
 
 export type Row<TData extends any> = BaseRow<TData> &
-  ColumnVisibilityRow<TData>;
+  ColumnVisibilityRow<TData> &
+  RowSelectionRow<TData>;
 
 export type Cell<TData extends any> = BaseCell<TData>;
 
