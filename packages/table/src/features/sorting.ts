@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
+import * as React from "react";
 import { TableFeature } from "../types";
+import { functionalUpdate } from "../utils/functional-update";
 
 export type Sort = "asc" | "desc" | undefined;
 export type SortingState = Record<string, Sort>;
@@ -24,7 +26,7 @@ export type SortTableState = {
 };
 
 export type SortingOptions = {
-  onSortingChange: (sorting: SortingState) => void;
+  onSortingChange: (updater: React.SetStateAction<SortingState>) => void;
 };
 
 export type SortingColumn = {
@@ -33,20 +35,23 @@ export type SortingColumn = {
 };
 
 export type SortingInstance<TData extends any> = {
-  setSorting: (sorting: SortingState) => void;
+  setSorting: (updater: React.SetStateAction<SortingState>) => void;
 };
 
 export const sorting: TableFeature = {
   getDefaultOptions: (table) => ({
-    onSortingChange: (sorting) =>
-      table.setState((prev) => ({ ...prev, sorting })),
+    onSortingChange: (updater) =>
+      table.setState((prev) => ({
+        ...prev,
+        sorting: functionalUpdate(updater, prev.sorting),
+      })),
   }),
   getInitialState: (state) => ({
     sorting: {},
     ...state,
   }),
   init: (table) => {
-    table.setSorting = (sorting) => table.options.onSortingChange?.(sorting);
+    table.setSorting = (updater) => table.options.onSortingChange?.(updater);
   },
   initColumn: (table, column) => {
     column.getSortingValue = () => table.getState().sorting?.[column.id];
