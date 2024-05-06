@@ -16,7 +16,9 @@
 
 // pagination is currently manual only
 
+import * as React from "react";
 import { TableFeature } from "../types";
+import { functionalUpdate } from "../utils/functional-update";
 
 const DEFAULT_PAGE_SIZE = 10;
 const DEFAULT_PAGE_INDEX = 0;
@@ -31,13 +33,19 @@ export type PaginationTableState = {
 };
 
 export type PaginationOptions = {
-  onPaginationChange: (pagination: PaginationState) => void;
+  onPaginationChange: (updater: React.SetStateAction<PaginationState>) => void;
+  pageCount?: number;
+  rowCount?: number;
 };
 
 export type PaginationInstance = {
-  setPagination: (pagination: PaginationState) => void;
-  setPageIndex: (pageIndex: number) => void;
-  setPageSize: (pageSize: number) => void;
+  setPagination: (updater: React.SetStateAction<PaginationState>) => void;
+  setPageIndex: (updater: React.SetStateAction<number>) => void;
+  setPageSize: (updater: React.SetStateAction<number>) => void;
+  getPageCount: () => number;
+  getRowCount: () => number;
+  nextPage: () => void;
+  previousPage: () => void;
 };
 
 const getDefaultPaginationState = (): PaginationState => ({
@@ -47,8 +55,11 @@ const getDefaultPaginationState = (): PaginationState => ({
 
 export const pagination: TableFeature = {
   getDefaultOptions: (table) => ({
-    onPaginationChange: (pagination) =>
-      table.setState((prev) => ({ ...prev, pagination })),
+    onPaginationChange: (updater) =>
+      table.setState((prev) => ({
+        ...prev,
+        pagination: functionalUpdate(updater, prev.pagination),
+      })),
   }),
   getInitialState: (state) => ({
     ...state,
@@ -58,11 +69,25 @@ export const pagination: TableFeature = {
     },
   }),
   init: (table) => {
-    table.setPagination = (pagination) =>
-      table.options.onPaginationChange?.(pagination);
-    table.setPageIndex = (pageIndex) =>
-      table.setPagination({ ...table.getState().pagination, pageIndex });
-    table.setPageSize = (pageSize) =>
-      table.setPagination({ ...table.getState().pagination, pageSize });
+    table.setPagination = (updater) =>
+      table.options.onPaginationChange?.(updater);
+    table.setPageIndex = (updater) =>
+      table.setPagination((prev) => {
+        return {
+          ...prev,
+          pageIndex: functionalUpdate(updater, prev.pageIndex),
+        };
+      });
+    table.nextPage = () => table.setPageIndex((prev) => prev + 1);
+    table.previousPage = () =>
+      table.setPageIndex((prev) => Math.max(prev - 1, 0));
+    table.setPageSize = (updater) =>
+      table.setPagination((prev) => {
+        return { ...prev, pageSize: functionalUpdate(updater, prev.pageSize) };
+      });
+    table.getPageCount = () =>
+      table.options.pageCount ??
+      Math.ceil(table.getRowCount() / table.getState().pagination.pageSize);
+    table.getRowCount = () => table.options.rowCount ?? 0;
   },
 };

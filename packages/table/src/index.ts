@@ -15,4 +15,11 @@
  */
 
 export * from "./use-table";
+
+export * from "./features/column-filtering";
+export * from "./features/column-visibility";
+export * from "./features/pagination";
+export * from "./features/row-selection";
+export * from "./features/sorting";
+
 export * from "./types";

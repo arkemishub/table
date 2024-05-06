@@ -62,7 +62,7 @@ export const Pagination = () => {
       <PaginationComponent>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious onClick={() => null} />
+            <PaginationPrevious onClick={() => table.previousPage()} />
           </PaginationItem>
           <PaginationItem>
             <PaginationLink
@@ -92,7 +92,7 @@ export const Pagination = () => {
             <PaginationEllipsis />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext onClick={() => null} />
+            <PaginationNext onClick={() => table.nextPage()} />
           </PaginationItem>
         </PaginationContent>
       </PaginationComponent>

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
+import * as React from "react";
 import { Row, TableFeature } from "../types";
+import { functionalUpdate } from "../utils/functional-update";
 
 export type RowSelectionState = Record<string, boolean>;
 
@@ -23,11 +25,13 @@ export type RowSelectionTableState = {
 };
 
 export type RowSelectionOptions = {
-  onRowSelectionChange: (rowSelection: RowSelectionState) => void;
+  onRowSelectionChange: (
+    updater: React.SetStateAction<RowSelectionState>
+  ) => void;
 };
 
 export type RowSelectionInstance<TData extends any> = {
-  setRowSelection: (rowSelection: RowSelectionState) => void;
+  setRowSelection: (updater: React.SetStateAction<RowSelectionState>) => void;
   getSelectedRows: () => Row<TData>[];
 };
 
@@ -38,25 +42,28 @@ export type RowSelectionRow<TData extends any> = {
 
 export const rowSelection: TableFeature = {
   getDefaultOptions: (table) => ({
-    onRowSelectionChange: (rowSelection) =>
-      table.setState((prev) => ({ ...prev, rowSelection })),
+    onRowSelectionChange: (updater) =>
+      table.setState((prev) => ({
+        ...prev,
+        rowSelection: functionalUpdate(updater, prev.rowSelection),
+      })),
   }),
   getInitialState: (state) => ({
     rowSelection: {},
     ...state,
   }),
   init: (table) => {
-    table.setRowSelection = (rowSelection) =>
-      table.options.onRowSelectionChange?.(rowSelection);
+    table.setRowSelection = (updater) =>
+      table.options.onRowSelectionChange?.(updater);
     table.getSelectedRows = () =>
       table.getRows().filter((row) => row.isSelected());
   },
   initRow: (table, row) => {
     row.toggleRowSelection = (value) =>
-      table.setRowSelection({
-        ...table.getState().rowSelection,
-        [row.id]: value ?? !table.getState().rowSelection[row.id],
-      });
+      table.setRowSelection((prev) => ({
+        ...prev,
+        [row.id]: value ?? !prev[row.id],
+      }));
     row.isSelected = () => table.getState().rowSelection[row.id] ?? false;
   },
 };

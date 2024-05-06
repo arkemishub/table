@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
+import * as React from "react";
 import { Cell, Column, TableFeature } from "../types";
+import { functionalUpdate } from "../utils/functional-update";
 
 export type ColumnVisibilityState = Record<string, boolean>;
 
@@ -23,11 +25,15 @@ export type ColumnVisibilityTableState = {
 };
 
 export type ColumnVisibilityOptions = {
-  onColumnVisibilityChange: (columnVisibility: ColumnVisibilityState) => void;
+  onColumnVisibilityChange: (
+    updater: React.SetStateAction<ColumnVisibilityState>
+  ) => void;
 };
 
 export type ColumnVisibilityInstance<TData extends any> = {
-  setColumnVisibility: (columnVisibility: ColumnVisibilityState) => void;
+  setColumnVisibility: (
+    updater: React.SetStateAction<ColumnVisibilityState>
+  ) => void;
   getAllVisibleColumns: () => Column<TData>[];
 };
 
@@ -42,16 +48,19 @@ export type ColumnVisibilityRow<TData extends any> = {
 
 export const columnVisibility: TableFeature = {
   getDefaultOptions: (table) => ({
-    onColumnVisibilityChange: (columnVisibility) =>
-      table.setState((prev) => ({ ...prev, columnVisibility })),
+    onColumnVisibilityChange: (updater) =>
+      table.setState((prev) => ({
+        ...prev,
+        columnVisibility: functionalUpdate(updater, prev.columnVisibility),
+      })),
   }),
   getInitialState: (state) => ({
     columnVisibility: {},
     ...state,
   }),
   init: (table) => {
-    table.setColumnVisibility = (columnVisibility) =>
-      table.options.onColumnVisibilityChange?.(columnVisibility);
+    table.setColumnVisibility = (updater) =>
+      table.options.onColumnVisibilityChange?.(updater);
     table.getAllVisibleColumns = () =>
       table.getAllColumns().filter((column) => column.isVisible());
   },
@@ -59,10 +68,10 @@ export const columnVisibility: TableFeature = {
     column.isVisible = () =>
       table.getState().columnVisibility?.[column.id] ?? true;
     column.toggleVisibility = (value) =>
-      table.setColumnVisibility({
-        ...table.getState().columnVisibility,
+      table.setColumnVisibility((prev) => ({
+        ...prev,
         [column.id]: value ?? !column.isVisible(),
-      });
+      }));
   },
   initRow: (table, row) => {
     row.getAllVisibleCells = () =>

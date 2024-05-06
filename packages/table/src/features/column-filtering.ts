@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
+import * as React from "react";
 import { TableFeature } from "../types";
+import { functionalUpdate } from "../utils/functional-update";
 
 export type ColumnFilteringState = Record<string, unknown>;
 
@@ -23,7 +25,9 @@ export type ColumnFilteringTableState = {
 };
 
 export type ColumnFilteringOptions = {
-  onColumnFiltersChange: (columnFilters: ColumnFilteringState) => void;
+  onColumnFiltersChange: (
+    updater: React.SetStateAction<ColumnFilteringState>
+  ) => void;
 };
 
 export type ColumnFilteringColumn = {
@@ -32,21 +36,26 @@ export type ColumnFilteringColumn = {
 };
 
 export type ColumnFilteringInstance<TData extends any> = {
-  setColumnFilters: (columnFilters: ColumnFilteringState) => void;
+  setColumnFilters: (
+    updater: React.SetStateAction<ColumnFilteringState>
+  ) => void;
 };
 
 export const columnFiltering: TableFeature = {
   getDefaultOptions: (table) => ({
-    onColumnFiltersChange: (columnFilters) =>
-      table.setState((prev) => ({ ...prev, columnFilters })),
+    onColumnFiltersChange: (updater) =>
+      table.setState((prev) => ({
+        ...prev,
+        columnFilters: functionalUpdate(updater, prev.columnFilters),
+      })),
   }),
   getInitialState: (state) => ({
     columnFilters: {},
     ...state,
   }),
   init: (table) => {
-    table.setColumnFilters = (columnFilters) =>
-      table.options.onColumnFiltersChange?.(columnFilters);
+    table.setColumnFilters = (updater) =>
+      table.options.onColumnFiltersChange?.(updater);
   },
   initColumn: (table, column) => {
     column.getFilterValue = () => table.getState().columnFilters?.[column.id];
