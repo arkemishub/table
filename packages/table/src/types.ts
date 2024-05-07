@@ -84,7 +84,7 @@ export type TableBaseInstance<TData extends any> = {
   getRows: () => Row<TData>[];
 };
 
-export type Types<TData extends any> = TableBaseInstance<TData> &
+export type Table<TData extends any> = TableBaseInstance<TData> &
   PaginationInstance &
   ColumnVisibilityInstance<TData> &
   ColumnFilteringInstance<TData> &
@@ -112,14 +112,14 @@ export type Column<TData extends any> = ColumnDef<TData> &
 
 export type TableFeature<TData extends any = any> = {
   getInitialState?: (state?: Partial<TableState>) => Partial<TableState>;
-  init: (table: Types<TData>) => void;
+  init: (table: Table<TData>) => void;
   getDefaultOptions?: (
-    table: Types<TData>
+    table: Table<TData>
   ) => Partial<TableResolvedOptions<TData>>;
-  initColumn?: (table: Types<TData>, column: Column<any>) => void;
-  initRow?: (table: Types<TData>, row: Row<TData>) => void;
+  initColumn?: (table: Table<TData>, column: Column<any>) => void;
+  initRow?: (table: Table<TData>, row: Row<TData>) => void;
   initCell?: (
-    table: Types<TData>,
+    table: Table<TData>,
     cell: Cell<TData>,
     column: Column<TData>,
     row: Row<TData>

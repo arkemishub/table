@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { ColumnDef, Column, Types } from "../types";
+import { ColumnDef, Column, Table } from "../types";
 
 export function initColumn<TData extends any>(
-  table: Types<TData>,
+  table: Table<TData>,
   columnDef: ColumnDef<TData>
 ) {
   let column: ColumnDef<TData> = {

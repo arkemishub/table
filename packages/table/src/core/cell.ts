@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Column, Row, Types, Cell } from "../types";
+import { Column, Row, Table, Cell } from "../types";
 
 export type BaseCell<TData extends any> = {
   column: Column<TData>;
@@ -24,7 +24,7 @@ export type BaseCell<TData extends any> = {
   row: Row<TData>;
 };
 export function initCell<TData extends any>(
-  table: Types<TData>,
+  table: Table<TData>,
   column: Column<TData>,
   row: Row<TData>
 ) {
