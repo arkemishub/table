@@ -31,7 +31,7 @@ export const RowSelection = () => {
         <TableHeader>
           <TableRow>
             <TableHead>Action</TableHead>
-            {table.getAllVisibleColumns().map((column) => {
+            {table.getVisibleColumns().map((column) => {
               const sorting = column.getSortingValue();
               return (
                 <TableHead
@@ -57,7 +57,7 @@ export const RowSelection = () => {
                   onChange={() => row.toggleRowSelection()}
                 />
               </TableCell>
-              {row.getAllVisibleCells().map((cell) => (
+              {row.getVisibleCells().map((cell) => (
                 <TableCell
                   className="peer-has-[:checked]:bg-gray-100"
                   key={cell.id}

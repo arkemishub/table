@@ -47,12 +47,20 @@ import {
   RowSelectionRow,
   RowSelectionTableState,
 } from "./features/row-selection";
+import {
+  ColumnPinningColumn,
+  ColumnPinningInstance,
+  ColumnPinningOptions,
+  ColumnPinningRow,
+  ColumnPinningTableState,
+} from "./features/column-pinning";
 
 export type TableState = PaginationTableState &
   ColumnVisibilityTableState &
   ColumnFilteringTableState &
   SortTableState &
-  RowSelectionTableState;
+  RowSelectionTableState &
+  ColumnPinningTableState;
 
 export type TableBaseOptions<TData extends any> = {
   columns: ColumnDef<TData>[];
@@ -67,7 +75,8 @@ export type TableResolvedOptions<TData extends any> = TableBaseOptions<TData> &
   ColumnVisibilityOptions &
   ColumnFilteringOptions &
   SortingOptions &
-  RowSelectionOptions;
+  RowSelectionOptions &
+  ColumnPinningOptions;
 
 export type TableOptions<TData extends any> = Partial<
   TableResolvedOptions<TData>
@@ -89,7 +98,8 @@ export type Table<TData extends any> = TableBaseInstance<TData> &
   ColumnVisibilityInstance<TData> &
   ColumnFilteringInstance<TData> &
   SortingInstance<TData> &
-  RowSelectionInstance<TData>;
+  RowSelectionInstance<TData> &
+  ColumnPinningInstance<TData>;
 
 export type ColumnDef<TData extends any> = {
   id: string;
@@ -101,14 +111,16 @@ export type ColumnDef<TData extends any> = {
 
 export type Row<TData extends any> = BaseRow<TData> &
   ColumnVisibilityRow<TData> &
-  RowSelectionRow<TData>;
+  RowSelectionRow<TData> &
+  ColumnPinningRow<TData>;
 
 export type Cell<TData extends any> = BaseCell<TData>;
 
 export type Column<TData extends any> = ColumnDef<TData> &
   ColumnVisibilityColumn &
   ColumnFilteringColumn &
-  SortingColumn;
+  SortingColumn &
+  ColumnPinningColumn;
 
 export type TableFeature<TData extends any = any> = {
   getInitialState?: (state?: Partial<TableState>) => Partial<TableState>;

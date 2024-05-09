@@ -34,7 +34,7 @@ export type ColumnVisibilityInstance<TData extends any> = {
   setColumnVisibility: (
     updater: React.SetStateAction<ColumnVisibilityState>
   ) => void;
-  getAllVisibleColumns: () => Column<TData>[];
+  getVisibleColumns: () => Column<TData>[];
 };
 
 export type ColumnVisibilityColumn = {
@@ -43,7 +43,7 @@ export type ColumnVisibilityColumn = {
 };
 
 export type ColumnVisibilityRow<TData extends any> = {
-  getAllVisibleCells: () => Cell<TData>[];
+  getVisibleCells: () => Cell<TData>[];
 };
 
 export const columnVisibility: TableFeature = {
@@ -61,7 +61,7 @@ export const columnVisibility: TableFeature = {
   init: (table) => {
     table.setColumnVisibility = (updater) =>
       table.options.onColumnVisibilityChange?.(updater);
-    table.getAllVisibleColumns = () =>
+    table.getVisibleColumns = () =>
       table.getAllColumns().filter((column) => column.isVisible());
   },
   initColumn: (table, column) => {
@@ -74,7 +74,7 @@ export const columnVisibility: TableFeature = {
       }));
   },
   initRow: (table, row) => {
-    row.getAllVisibleCells = () =>
+    row.getVisibleCells = () =>
       row.getAllCells().filter((cell) => cell.column.isVisible());
   },
 };

@@ -31,7 +31,7 @@ export const Sorting = () => {
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            {table.getAllVisibleColumns().map((column) => {
+            {table.getVisibleColumns().map((column) => {
               const sorting = column.getSortingValue();
               return (
                 <TableHead
@@ -50,7 +50,7 @@ export const Sorting = () => {
         <TableBody>
           {table.getRows().map((row) => (
             <TableRow key={row.id}>
-              {row.getAllVisibleCells().map((cell) => (
+              {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>{cell.getValue()}</TableCell>
               ))}
             </TableRow>

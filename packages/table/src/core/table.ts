@@ -23,6 +23,7 @@ import { initRow } from "./row";
 import { columnFiltering } from "../features/column-filtering";
 import { sorting } from "../features/sorting";
 import { rowSelection } from "../features/row-selection";
+import { columnPinning } from "../features/column-pinning";
 
 const features = [
   pagination,
@@ -30,6 +31,7 @@ const features = [
   columnFiltering,
   sorting,
   rowSelection,
+  columnPinning,
 ];
 export function initTable<TData extends any>(
   options: TableOptions<TData>

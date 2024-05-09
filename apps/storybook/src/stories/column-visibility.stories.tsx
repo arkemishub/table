@@ -36,7 +36,7 @@ export const ColumnVisibility = () => {
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            {table.getAllVisibleColumns().map((column) => (
+            {table.getVisibleColumns().map((column) => (
               <TableHead key={column.id}>{column.id}</TableHead>
             ))}
           </TableRow>
@@ -44,7 +44,7 @@ export const ColumnVisibility = () => {
         <TableBody>
           {table.getRows().map((row) => (
             <TableRow key={row.id}>
-              {row.getAllVisibleCells().map((cell) => (
+              {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>{cell.getValue()}</TableCell>
               ))}
             </TableRow>
