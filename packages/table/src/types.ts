@@ -68,6 +68,7 @@ export type TableBaseOptions<TData extends any> = {
   onStateChange: React.Dispatch<React.SetStateAction<TableState>>;
   initialState?: Partial<TableState>;
   data: TData[];
+  getRowId?: (data: TData) => string;
 };
 
 export type TableResolvedOptions<TData extends any> = TableBaseOptions<TData> &

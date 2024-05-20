@@ -18,6 +18,7 @@ export const RowSelection = () => {
   const table = useTable({
     columns,
     data: invoices,
+    getRowId: (row) => row.invoice,
   });
 
   return (

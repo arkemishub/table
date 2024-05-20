@@ -65,7 +65,7 @@ export function initTable<TData extends any>(
       table.options.columns?.map((column) => initColumn(table, column)) ?? [],
     getRows: () =>
       table.options.data?.map((data, index) =>
-        initRow(table, index.toString(), data)
+        initRow(table, table.options.getRowId?.(data) ?? index.toString(), data)
       ),
   } as Table<TData>;
 
