@@ -16,14 +16,21 @@
 
 import { ColumnDef, Column, Table } from "../types";
 
+export type BaseColumn<TData> = {
+  id: string;
+  columnDef: ColumnDef<TData>;
+};
+
 export function initColumn<TData extends any>(
   table: Table<TData>,
   columnDef: ColumnDef<TData>
 ) {
-  let column: ColumnDef<TData> = {
+  let column: BaseColumn<TData> = {
     id: columnDef.id,
-    header: columnDef.header ?? columnDef.id,
-    cell: columnDef.cell,
+    columnDef: {
+      ...columnDef,
+      header: columnDef.header ?? columnDef.id,
+    },
   };
 
   for (const feature of table.features) {

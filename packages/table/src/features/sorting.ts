@@ -17,6 +17,7 @@
 import * as React from "react";
 import { TableFeature } from "../types";
 import { functionalUpdate } from "../utils/functional-update";
+import pre from "@changesets/cli/dist/declarations/src/commands/pre";
 
 export type Sort = "asc" | "desc" | undefined;
 export type SortingState = Record<string, Sort>;
@@ -27,10 +28,16 @@ export type SortTableState = {
 
 export type SortingOptions = {
   onSortingChange: (updater: React.SetStateAction<SortingState>) => void;
+  enableSorting?: boolean;
+};
+
+export type SortingColumnDef = {
+  enableSorting?: boolean;
 };
 
 export type SortingColumn = {
   getSortingValue: () => Sort;
+  canSort: () => boolean;
   setSort: (value: Sort) => void;
 };
 
@@ -54,11 +61,16 @@ export const sorting: TableFeature = {
     table.setSorting = (updater) => table.options.onSortingChange?.(updater);
   },
   initColumn: (table, column) => {
+    column.canSort = () =>
+      (column.columnDef.enableSorting ?? true) &&
+      (table.options.enableSorting ?? true);
     column.getSortingValue = () => table.getState().sorting?.[column.id];
-    column.setSort = (value) =>
-      table.setSorting({
-        ...table.getState().sorting,
-        [column.id]: value,
-      });
+    column.setSort = (value) => {
+      if (column.canSort())
+        table.setSorting((prevState) => ({
+          ...prevState,
+          [column.id]: value,
+        }));
+    };
   },
 };
