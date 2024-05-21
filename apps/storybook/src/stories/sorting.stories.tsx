@@ -1,4 +1,4 @@
-import { useTable } from "@arkejs/table";
+import { ColumnDef, useTable } from "@arkejs/table";
 import {
   Table,
   TableBody,
@@ -9,15 +9,36 @@ import {
   TableHeader,
   TableRow,
 } from "../components/table.tsx";
-import { columns, invoices } from "../mocks/data.tsx";
+import { Invoice, invoices } from "../mocks/data.tsx";
+import { useState } from "react";
 
 export default {
   title: "Sorting",
 };
+
+const columns: ColumnDef<Invoice>[] = [
+  {
+    id: "invoice",
+  },
+  {
+    id: "paymentStatus",
+    enableSorting: false,
+  },
+  {
+    id: "paymentMethod",
+  },
+  {
+    id: "totalAmount",
+  },
+];
+
 export const Sorting = () => {
+  const [enableSorting, setEnableSorting] = useState(true);
+
   const table = useTable({
     columns,
     data: invoices,
+    enableSorting,
     initialState: {
       sorting: {
         invoice: "asc",
@@ -27,6 +48,16 @@ export const Sorting = () => {
 
   return (
     <>
+      <div>
+        <input
+          id="enable-sorting"
+          type="checkbox"
+          checked={enableSorting}
+          onChange={() => setEnableSorting((prevState) => !prevState)}
+        />
+        <label htmlFor="enable-sorting">Enable Sorting</label>
+      </div>
+      {JSON.stringify(table.getState().sorting)}
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>

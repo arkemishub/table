@@ -37,6 +37,7 @@ import {
 } from "./features/column-filtering";
 import {
   SortingColumn,
+  SortingColumnDef,
   SortingInstance,
   SortingOptions,
   SortTableState,
@@ -54,6 +55,7 @@ import {
   ColumnPinningRow,
   ColumnPinningTableState,
 } from "./features/column-pinning";
+import { BaseColumn } from "./core/column";
 
 export type TableState = PaginationTableState &
   ColumnVisibilityTableState &
@@ -102,12 +104,15 @@ export type Table<TData extends any> = TableBaseInstance<TData> &
   RowSelectionInstance<TData> &
   ColumnPinningInstance<TData>;
 
-export type ColumnDef<TData extends any> = {
+export type ColumnConfig = Record<string, unknown>;
+
+export type ColumnDef<TData extends any> = SortingColumnDef & {
   id: string;
   header?: string;
   cell?: {
     renderValue?: (value: TData) => React.ReactNode;
   };
+  config?: ColumnConfig;
 };
 
 export type Row<TData extends any> = BaseRow<TData> &
@@ -117,7 +122,7 @@ export type Row<TData extends any> = BaseRow<TData> &
 
 export type Cell<TData extends any> = BaseCell<TData>;
 
-export type Column<TData extends any> = ColumnDef<TData> &
+export type Column<TData extends any> = BaseColumn<TData> &
   ColumnVisibilityColumn &
   ColumnFilteringColumn &
   SortingColumn &
@@ -129,7 +134,7 @@ export type TableFeature<TData extends any = any> = {
   getDefaultOptions?: (
     table: Table<TData>
   ) => Partial<TableResolvedOptions<TData>>;
-  initColumn?: (table: Table<TData>, column: Column<any>) => void;
+  initColumn?: (table: Table<TData>, column: Column<TData>) => void;
   initRow?: (table: Table<TData>, row: Row<TData>) => void;
   initCell?: (
     table: Table<TData>,

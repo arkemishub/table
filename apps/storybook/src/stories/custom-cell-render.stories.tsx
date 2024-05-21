@@ -48,7 +48,7 @@ export const CustomCellRender = () => {
       <TableHeader>
         <TableRow>
           {table.getAllColumns().map((column) => (
-            <TableHead key={column.id}>{column.header}</TableHead>
+            <TableHead key={column.id}>{column.columnDef.header}</TableHead>
           ))}
         </TableRow>
       </TableHeader>

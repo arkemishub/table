@@ -36,8 +36,8 @@ export function initCell<TData extends any>(
     column,
     getValue,
     renderValue: () =>
-      column?.cell?.renderValue
-        ? column.cell.renderValue(row.data)
+      column?.columnDef.cell?.renderValue
+        ? column.columnDef.cell.renderValue(row.data)
         : getValue(),
   };
 
