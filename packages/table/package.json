@@ -1,6 +1,6 @@
 {
   "name": "@arkejs/table",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Arke Table component",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
