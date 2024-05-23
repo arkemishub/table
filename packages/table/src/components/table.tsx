@@ -92,7 +92,7 @@ const Table = React.forwardRef<
     const displayedColumnCount = React.useMemo(
       () =>
         actions ? actions.actions.length + columns.length : columns.length,
-      [columns.length, actions?.actions.length]
+      [columns.length, actions?.actions?.length]
     );
 
     const renderExpanded = React.useCallback(
