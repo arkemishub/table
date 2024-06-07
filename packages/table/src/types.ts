@@ -31,6 +31,7 @@ import { BaseRow } from "./core/row";
 import { BaseCell } from "./core/cell";
 import {
   ColumnFilteringColumn,
+  ColumnFilteringColumnDef,
   ColumnFilteringInstance,
   ColumnFilteringOptions,
   ColumnFilteringTableState,
@@ -106,14 +107,15 @@ export type Table<TData extends any> = TableBaseInstance<TData> &
 
 export type ColumnConfig = Record<string, unknown>;
 
-export type ColumnDef<TData extends any> = SortingColumnDef & {
-  id: string;
-  header?: string;
-  cell?: {
-    renderValue?: (value: TData) => React.ReactNode;
+export type ColumnDef<TData extends any> = SortingColumnDef &
+  ColumnFilteringColumnDef & {
+    id: string;
+    header?: string;
+    cell?: {
+      renderValue?: (value: TData) => React.ReactNode;
+    };
+    config?: ColumnConfig;
   };
-  config?: ColumnConfig;
-};
 
 export type Row<TData extends any> = BaseRow<TData> &
   ColumnVisibilityRow<TData> &

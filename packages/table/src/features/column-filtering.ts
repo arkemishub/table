@@ -28,11 +28,17 @@ export type ColumnFilteringOptions = {
   onColumnFiltersChange: (
     updater: React.SetStateAction<ColumnFilteringState>
   ) => void;
+  enableColumnFiltering?: boolean;
+};
+
+export type ColumnFilteringColumnDef = {
+  enableColumnFiltering?: boolean;
 };
 
 export type ColumnFilteringColumn = {
   getFilterValue: () => unknown;
   setFilter: (value: unknown) => void;
+  canFilter: () => boolean;
 };
 
 export type ColumnFilteringInstance<TData extends any> = {
@@ -64,5 +70,8 @@ export const columnFiltering: TableFeature = {
         ...table.getState().columnFilters,
         [column.id]: value,
       });
+    column.canFilter = () =>
+      (column.columnDef.enableColumnFiltering ?? true) &&
+      (table.options.enableColumnFiltering ?? true);
   },
 };

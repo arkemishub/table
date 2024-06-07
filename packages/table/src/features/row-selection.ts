@@ -28,6 +28,7 @@ export type RowSelectionOptions = {
   onRowSelectionChange: (
     updater: React.SetStateAction<RowSelectionState>
   ) => void;
+  enableRowSelection?: boolean;
 };
 
 export type RowSelectionInstance<TData extends any> = {
@@ -38,6 +39,7 @@ export type RowSelectionInstance<TData extends any> = {
 export type RowSelectionRow<TData extends any> = {
   isSelected: () => boolean;
   toggleRowSelection: (value?: boolean) => void;
+  canSelect: () => boolean;
 };
 
 export const rowSelection: TableFeature = {
@@ -65,5 +67,6 @@ export const rowSelection: TableFeature = {
         [row.id]: value ?? !prev[row.id],
       }));
     row.isSelected = () => table.getState().rowSelection[row.id] ?? false;
+    row.canSelect = () => table.options.enableRowSelection ?? true;
   },
 };
